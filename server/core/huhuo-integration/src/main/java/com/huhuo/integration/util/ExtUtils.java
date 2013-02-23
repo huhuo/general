@@ -31,4 +31,11 @@ public class ExtUtils {
 		JsonStore<T> store = new JsonStore<T>(records, total);
 		return store;
 	}
+	/**
+	 * @see #getJsonStore(List, Long)
+	 */
+	public static <T> JsonStore<T> getJsonStore(List<T> records, Integer total){
+		JsonStore<T> store = new JsonStore<T>(records, total);
+		return store;
+	}
 }

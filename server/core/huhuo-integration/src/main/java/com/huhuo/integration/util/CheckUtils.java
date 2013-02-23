@@ -24,6 +24,19 @@ public class CheckUtils {
 		return isAllNull;
 	}
 	
+	/**
+	 * objs是否全不为null值
+	 * @param objs
+	 * @return
+	 */
+	public static boolean isNoNull(Object... objs) {
+		boolean r = true;
+		for(Object obj : objs) {
+			r = r && !isNull(obj);
+		}
+		return r;
+	}
+	
 	public static boolean validLength(int min, int max, Object obj){
 		if(obj!=null){
 			String r = obj.toString();

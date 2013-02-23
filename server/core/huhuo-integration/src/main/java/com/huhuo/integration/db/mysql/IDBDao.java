@@ -26,6 +26,12 @@ public interface IDBDao<T> {
 	 */
 	Long insert(T t) throws DaoException;
 	/**
+	 * add batch
+	 * @param list
+	 * @return
+	 */
+	int[] addBatch(List<T> list);
+	/**
 	 * update model t by id
 	 * @param t
 	 * @return null if t==null, else the generated key value
@@ -46,6 +52,11 @@ public interface IDBDao<T> {
 	 * @throws DaoException
 	 */
 	<PK> Integer deleteById(PK id) throws DaoException;
+	/**
+	 * get the total number
+	 * @return
+	 */
+	Long count();
 	/**
 	 * execute the sql, and retrieve a list with element mapped by @param clazz
 	 * @param sql
