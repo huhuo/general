@@ -1,0 +1,9 @@
+.exit_panel {
+	float:right;   
+}
+
+.welcome_panel {
+	position:relative;
+	float:right;
+	color:#fff;	
+}
