@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:util="http://www.springframework.org/schema/util"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<util:properties id="memProps" location="classpath:memcached.properties" />
+
+	<!-- XMemcachedClientBuilder have two arguments.First is server list,and 
+		second is weights array. -->
+	<bean name="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder">
+		<constructor-arg>
+			<list>
+				<bean class="java.net.InetSocketAddress">
+					<constructor-arg>
+						<value>#{memProps['memcached.server1']}</value>
+					</constructor-arg>
+					<constructor-arg>
+						<value>#{memProps['memcached.port1']}</value>
+					</constructor-arg>
+				</bean>
+			</list>
+		</constructor-arg>
+		<constructor-arg>
+			<list>
+				<value>#{memProps['memcached.weight1']}</value>
+			</list>
+		</constructor-arg>
+		
+		<property name="connectionPoolSize" value="#{memProps['memcached.connectionPoolSize']}"></property>
+		<property name="commandFactory">
+			<bean class="net.rubyeye.xmemcached.command.TextCommandFactory"></bean>
+		</property>
+		<property name="sessionLocator">
+			<bean class="net.rubyeye.xmemcached.impl.KetamaMemcachedSessionLocator"></bean>
+		</property>
+		<property name="transcoder">
+			<bean class="net.rubyeye.xmemcached.transcoders.WhalinTranscoder" /><!-- WhalinTranscoder is compatible with java-memcached-release-->
+			<!-- <bean class="net.rubyeye.xmemcached.transcoders.SerializingTranscoder" /> -->
+		</property>
+	</bean>
+	<bean name="memcachedClient" factory-bean="memcachedClientBuilder"
+		factory-method="build" destroy-method="shutdown" />
+
+	<bean id="memcachedService" class="com.huhuo.integration.service.MemcachedServImpl">
+		<property name="isOn" value="#{memProps['memcached.on']}"/>
+		<property name="memcachedClient" ref="memcachedClient"/>
+		<!-- 
+		<property name="defalutExpiration" value="86400"/>
+		<property name="defaultTimeout" value="60000"/> 
+		-->
+	</bean>
+</beans>
