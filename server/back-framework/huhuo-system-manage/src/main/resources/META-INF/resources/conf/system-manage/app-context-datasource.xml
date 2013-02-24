@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+	">
+
+	<util:properties id="smDsProps" location="conf/system-manage/jdbc.properties" />
+
+	<!-- c3p0数据源 -->
+	<!-- for system-manage -->
+	<bean id="smDsSystemManage" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="#{smDsProps['system-manage.jdbc.driverclass']}" />
+		<property name="jdbcUrl" value="#{smDsProps['system-manage.jdbc.url']}" />
+		<property name="user" value="#{smDsProps['system-manage.jdbc.username']}" />
+		<property name="password" value="#{smDsProps['system-manage.jdbc.password']}" />
+
+		<property name="maxPoolSize" value="#{smDsProps['c3p0.pool.size.max']}" />
+		<property name="minPoolSize" value="#{smDsProps['c3p0.pool.size.min']}" />
+		<property name="initialPoolSize" value="#{smDsProps['c3p0.pool.size.ini']}" />
+		<property name="acquireIncrement" value="#{smDsProps['c3p0.pool.size.increment']}" />
+	</bean>
+
+	<!-- mybatis配置 -->
+	
+	<bean id="smSqlSessionFactorySystemManage" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="smDsSystemManage"></property>
+	</bean>
+
+
+</beans>

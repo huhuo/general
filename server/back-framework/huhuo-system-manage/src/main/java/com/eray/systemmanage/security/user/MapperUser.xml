@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eray.systemmanage.security.user.MapperUser">
+	<sql id="columns">
+		id, username, displayName ,password, contactPhone, cellphone, email, departmentId, provinceId, remark, createTime, pwdExpireTime, activeStatus
+	</sql>
+	<sql id="fields">
+		#{id}, #{username}, #{displayName}, #{password}, #{contactPhone}, #{cellphone}, #{email}, #{departmentId},
+		#{provinceId}, #{remark}, #{createTime}, #{pwdExpireTime}, #{activeStatus}
+	</sql>
+	<sql id="whereCriteria">
+		<where>
+			<if test="t!=null">
+				<if test="t.id!=null"> id=#{t.id}</if>
+				<if test="t.username!=null and t.username!=''"> AND username LIKE CONCAT('%',#{t.username},'%')</if>
+				<if test="t.displayName!=null and t.displayName!=null"> AND displayName LIKE CONCAT('%', #{t.displayName}, '%')</if>
+				<if test="t.contactPhone!=null and t.contactPhone!=''"> AND contactPhone LIKE CONCAT('%', #{t.contactPhone}, '%')</if>
+				<if test="t.cellphone!=null and t.cellphone!=''"> AND cellphone LIKE CONCAT('%', #{t.cellphone}, '%')</if>
+				<if test="t.email!=null and t.email!=''"> AND email LIKE CONCAT('%', #{t.email}, '%')</if>
+				<if test="t.departmentId!=null"> AND departmentId=#{t.departmentId}</if>
+				<if test="t.provinceId!=null"> AND provinceId=#{t.provinceId}</if>
+				<if test="t.remark!=null and t.remark!=''"> AND remark LIKE CONCAT('%', #{t.remark}, '%')</if>
+				<if test="t.activeStatus!=null"> AND activeStatus=#{t.activeStatus}</if>
+			</if>
+		</where>
+	</sql>
+	<sql id="orderCriteria">
+		<if test="orderList!=null">
+			ORDER BY
+			<foreach collection="orderList" item="order">
+				${order.field} ${order.dir}
+			</foreach>
+		</if>
+	</sql>
+	<sql id="limitCriteria">
+		<if test="page!=null and page.start!=null and page.limit!=null">
+			LIMIT #{page.start}, #{page.limit}
+		</if>
+	</sql>
+	
+	<insert id="add">
+		INSERT INTO sys_user(<include refid="columns"/>)
+		VALUES(<include refid="fields"/>)
+	</insert>
+	<update id="update">
+		UPDATE sys_user
+		SET username	=#{username},
+			displayName	=#{displayName},
+			password	=#{password},
+			contactPhone=#{contactPhone},
+			cellphone	=#{cellphone},
+			email		=#{email},
+			departmentId=#{departmentId},
+			provinceId	=#{provinceId},
+			remark		=#{remark},
+			activeStatus =#{activeStatus}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete">
+		DELETE FROM sys_user
+		WHERE id=#{id}
+	</delete>
+	<select id="find" resultType="com.eray.systemmanage.security.user.ModelUser">
+		SELECT <include refid="columns"/> FROM sys_user	
+		WHERE id=#{id}
+	</select>
+	<select id="findBy" resultType="com.eray.systemmanage.security.user.ModelUser">
+		SELECT <include refid="columns"/> FROM sys_user	
+		WHERE username	=#{username} AND
+			password	=#{password}
+	</select>
+	<select id="findByName" resultType="com.eray.systemmanage.security.user.ModelUser">
+		SELECT <include refid="columns"/> FROM sys_user	
+		WHERE username	=#{username}
+	</select>
+	
+	
+	<select id="findByCondition" resultType="com.eray.systemmanage.security.user.ModelUser">
+		SELECT <include refid="columns"/> FROM sys_user
+		<include refid="whereCriteria"/>
+		<include refid="orderCriteria" />
+		<include refid="limitCriteria" />
+	</select>
+	<select id="countByCondition" resultType="java.lang.Long">
+		SELECT COUNT(1)
+		FROM sys_user
+		<include refid="whereCriteria" />
+	</select>
+	
+</mapper>
