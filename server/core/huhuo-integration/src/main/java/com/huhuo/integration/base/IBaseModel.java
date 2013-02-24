@@ -1,8 +1,8 @@
-package com.huhuo.integration.db.mysql;
+package com.huhuo.integration.base;
 
 import java.io.Serializable;
 
-public interface IModel<PK> extends Serializable {
+public interface IBaseModel<PK> extends Serializable {
 
 	/**
 	 * primary key attribute

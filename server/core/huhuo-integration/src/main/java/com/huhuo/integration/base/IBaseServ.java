@@ -6,7 +6,7 @@ public interface IBaseServ <T> {
 	 * @param t
 	 * @return 数据库影响记录条数
 	 */
-	Long add(T t);
+	Integer add(T t);
 	/**
 	 * 根据id查找
 	 * @param <V>

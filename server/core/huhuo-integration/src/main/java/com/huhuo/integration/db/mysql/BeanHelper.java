@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.util.ReflectionUtils;
 
+import com.huhuo.integration.base.BaseModel;
+import com.huhuo.integration.base.IBaseModel;
 import com.huhuo.integration.exception.DaoException;
 
 /**
@@ -35,7 +37,7 @@ public class BeanHelper<T> {
 	
 	static final Logger logger = LoggerFactory.getLogger(BeanHelper.class); 
 	
-	public static <T> boolean isProxy(final IModel<T> modelBean){
+	public static <T> boolean isProxy(final IBaseModel<T> modelBean){
 		return modelBean instanceof Advised;
 	}
 	
@@ -58,18 +60,18 @@ public class BeanHelper<T> {
 		return false;
 	}
 	
-	public static <T> IModel<T> getTargetBean(IModel<T> entityBean){
+	public static <T> IBaseModel<T> getTargetBean(IBaseModel<T> entityBean){
 		if(!BeanHelper.isProxy(entityBean)){
 			return entityBean;
 		}
 		try{
-			return (IModel<T>)((Advised)entityBean).getTargetSource().getTarget();
+			return (IBaseModel<T>)((Advised)entityBean).getTargetSource().getTarget();
 		}catch(final Exception e){
 			throw new DaoException("The target object can't be resoled.", e);
 		}
 	}
 	
-	public static <T> GetterSetter[] getGetterSetter(final IModel<T> entityBean) {
+	public static <T> GetterSetter[] getGetterSetter(final IBaseModel<T> entityBean) {
 		return BeanHelper.getGetterSetter(entityBean.getClass());
 	}
 	
@@ -82,8 +84,8 @@ public class BeanHelper<T> {
 		}
 		BeanInfo beanInfo = null;
 		try{
-			if(GenericModel.class.isAssignableFrom(beanClazz))
-				beanInfo = Introspector.getBeanInfo(beanClazz, GenericModel.class);
+			if(BaseModel.class.isAssignableFrom(beanClazz))
+				beanInfo = Introspector.getBeanInfo(beanClazz, BaseModel.class);
 			else
 				beanInfo = Introspector.getBeanInfo(beanClazz);
 		}catch(final IntrospectionException ex){

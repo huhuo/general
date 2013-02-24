@@ -3,6 +3,7 @@ package com.huhuo.integration.base;
 import java.util.List;
 
 import com.huhuo.integration.db.mysql.Condition;
+import com.huhuo.integration.db.mysql.Page;
 
 
 /**
@@ -14,9 +15,9 @@ public interface IBaseExtenseServ<T> extends IBaseServ<T> {
 	/**
 	 * 批量插入
 	 * @param list
-	 * @return
+	 * @return rows number affected
 	 */
-	int[] addBatch(List<T> list);
+	Integer addBatch(List<T> list);
 	/**
 	 * 条件选择，如果参数为空，不作为选择条件;dateTime不能为空；
 	 * 时间范围条件选择（opt.timeBegin=<dateTime<=opt.timeBegin）
@@ -37,4 +38,10 @@ public interface IBaseExtenseServ<T> extends IBaseServ<T> {
 	 * @return
 	 */
 	Long countByCondition(Condition<T> condition);
+	/**
+	 * get all record by page
+	 * @param page
+	 * @return
+	 */
+	List<T> findModels(Page page);
 }
