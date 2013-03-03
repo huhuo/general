@@ -25,7 +25,11 @@ public interface IBaseExtenseDao<T> extends IBaseDao<T>{
 	 * @return
 	 * @throws DaoException
 	 */
-	<PK> T find(Class<T> clazz, PK id) throws DaoException;
+	<PK> T find(Class<T> clazz, PK id);
+	/**
+	 * @see #find(Class, Object)
+	 */
+	<PK> T find(PK id);
 	/**
 	 * get model by page, return all if start==null and limit==null
 	 * @param mappedClass
@@ -34,13 +38,17 @@ public interface IBaseExtenseDao<T> extends IBaseDao<T>{
 	 * @return
 	 * @throws DaoException
 	 */
-	List<T> findModels(Class<T> mappedClass, Integer start, Integer limit) throws DaoException;
+	List<T> findModels(Class<T> mappedClass, Integer start, Integer limit);
+	/**
+	 * @see #findModels(Integer, Integer)
+	 */
+	List<T> findModels(Integer start, Integer limit);
 	/**
 	 * find by condition
 	 * @param condition
 	 * @return
 	 */
-	List<T> findByCondition(Condition<T> condition);
+	List<T> findByCondition(Condition<T> condition) ;
 	/**
 	 * count by condition
 	 * @param condition

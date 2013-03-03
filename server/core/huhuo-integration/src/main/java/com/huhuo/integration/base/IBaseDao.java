@@ -55,6 +55,10 @@ public interface IBaseDao<T> {
 	 */
 	List<T> queryForList(String sql, Class<T> clazz, Object... args) throws DaoException;
 	/**
+	 * @see #queryForList(String, Class, Object...)
+	 */
+	List<T> queryForList(String sql, Object... args) throws DaoException;
+	/**
 	 * execute the sql, and retrieve an single object mapped by @param clazz
 	 * @param sql
 	 * @param clazz
@@ -63,6 +67,10 @@ public interface IBaseDao<T> {
 	 * @throws DaoException
 	 */
 	T queryForObject(String sql, Class<T> clazz, Object... args) throws DaoException;
+	/**
+	 * @see #queryForList(String, Class, Object...)
+	 */
+	T queryForObject(String sql, Object... args) throws DaoException;
 	/**
 	 * get the total number
 	 * @return
