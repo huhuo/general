@@ -1,5 +1,7 @@
 package com.huhuo.integration.base;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +14,12 @@ public class BaseModel implements IBaseModel<Long> {
 	
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
-	/**
-	 * primary key specified with name "id" and type "Long"
-	 */
+	/** primary key specified with name "id" and type "Long" **/
 	protected Long id;
+	/** a general mark to indicate the Model's status, it's often used to indicate the instance is logically deleted **/
+	protected Integer status;
+	/** a general field indicating model's create time or update time **/
+	protected Date dateTime;
 	
 	public Long getId() {
 		return id;
@@ -23,6 +27,22 @@ public class BaseModel implements IBaseModel<Long> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	@Override
