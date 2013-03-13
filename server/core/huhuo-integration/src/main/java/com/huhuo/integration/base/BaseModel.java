@@ -20,7 +20,7 @@ public class BaseModel implements IBaseModel<Long> {
 	protected Integer status;
 	/** a general field indicating model's create time **/
 	protected Date createTime;
-	/** a general field indicating model's update time **/
+	/** a general field indicating model's update time ha **/
 	protected Date updateTime;
 	
 	public Long getId() {
