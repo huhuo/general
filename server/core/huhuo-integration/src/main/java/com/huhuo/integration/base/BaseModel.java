@@ -65,4 +65,10 @@ public class BaseModel implements IBaseModel<Long> {
 		return JSONObject.toJSONStringWithDateFormat(this, dateFormat);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return this.toString().equals(obj.toString());
+	}
+
 }
