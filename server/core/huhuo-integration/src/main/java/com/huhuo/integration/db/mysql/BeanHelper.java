@@ -34,6 +34,8 @@ public class BeanHelper<T> {
 		public Method setter;
 	}
 	
+	private static Map<Class<?>, GetterSetter[]> getterSetterMap = new HashMap<Class<?>, GetterSetter[]>();
+	
 	static final Logger logger = LoggerFactory.getLogger(BeanHelper.class); 
 	
 	public static <T> boolean isProxy(final IBaseModel<T> modelBean){
@@ -42,18 +44,18 @@ public class BeanHelper<T> {
 	
 	public static <T> boolean isTransientField(Class<T> clazz, final String propertyName) {
 		Field propertyField = null;
-		while(true){
-			try{
+		while (true) {
+			try {
 				propertyField = clazz.getDeclaredField(propertyName);
 				break;
-			}catch(final NoSuchFieldException nsfe){
+			} catch (final NoSuchFieldException nsfe) {
 				clazz = (Class<T>) clazz.getSuperclass();
-				if(clazz.equals(Object.class))
+				if (clazz.equals(Object.class))
 					break;
 				continue;
 			}
 		}
-		if(propertyField!=null){
+		if (propertyField != null) {
 			return Modifier.isTransient(propertyField.getModifiers());
 		}
 		return false;
@@ -74,8 +76,6 @@ public class BeanHelper<T> {
 		return BeanHelper.getGetterSetter(entityBean.getClass());
 	}
 	
-	private static Map<Class<?>, GetterSetter[]> getterSetterMap = new HashMap<Class<?>, GetterSetter[]>();
-	
 	public static <T> GetterSetter[] getGetterSetter(final Class<T> beanClazz){
 		GetterSetter[] getterSetterArr = getterSetterMap.get(beanClazz);
 		if(getterSetterArr!=null){
@@ -88,11 +88,11 @@ public class BeanHelper<T> {
 //			else
 //				beanInfo = Introspector.getBeanInfo(beanClazz);
 			beanInfo = Introspector.getBeanInfo(beanClazz);
-		}catch(final IntrospectionException ex){
+		} catch (final IntrospectionException ex) {
 			BeanHelper.logger.error("null", ex);
 		}
 		final PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();	
-		Method setter,getter;
+		Method setter, getter;
 		final List<GetterSetter> ret = new ArrayList<GetterSetter>();
 		for(final PropertyDescriptor element : pds){
 			final String propertyName = element.getName();
