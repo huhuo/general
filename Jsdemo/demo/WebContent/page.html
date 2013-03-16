@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap 101 Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap -->
+<link href="js/bootstrap/css/bootstrap.css" rel="stylesheet"
+	media="screen">
+<script src="js/jquery/jquery.js"></script>
+<script src="js/bootstrap/js/bootstrap.js"></script>
+<script src="js/jquery/jquery.blockUI.js"></script>
+<script type="text/javascript">
+	jQuery.fn.myPage=function(pageVar,sizeVar,pageNo,size,total,url,loadDiv,toolSize){
+		console.info(url);
+		var ul=document.createElement("ul");
+		$(this).append(ul);
+		console.info($(this));
+		var liStart=document.createElement("li");
+		$(liStart).append("<a href='"+url+pageNo+"'>«</a>");
+		var liStart=document.createElement("li");
+		if(pageNo==1){
+			
+			
+		}
+		
+		$(ul).append("<li><a href='#'>«</a></li>")
+		
+		
+	};
+	$(document).ready(function(){
+		
+	$("#bb").myPage("http://www.baidu.com",2,90,10);
+	});
+
+
+</script>
+
+
+
+
+</head>
+<body>
+
+	<div id="bb" class="pagination pagination-centered">
+	</div>
+	<div class="pagination pagination-centered">
+		<ul>
+			<li><a href="#">«</a></li>
+			<li><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li><a href="#">»</a></li>
+		</ul>
+	</div>
+</body>
+</html>
