@@ -18,6 +18,8 @@
 		
 		<huhuo.system.manage-version>1.0.0</huhuo.system.manage-version>
 		<car.module.consumer-version>1.0.0</car.module.consumer-version>
+		<car.module.car-version>1.0.0</car.module.car-version>
+		<car.module.order-version>1.0.0</car.module.order-version>
 		
 	</properties>
 	
@@ -31,6 +33,17 @@
 			<groupId>com.huhuo</groupId>
 			<artifactId>car-module-consumer</artifactId>
 			<version>${car.module.consumer-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.huhuo</groupId>
+			<artifactId>car-module-car</artifactId>
+			<version>${car.module.car-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.huhuo</groupId>
+			<artifactId>car-module-order</artifactId>
+			<version>${car.module.order-version}</version>
 		</dependency>
 		<!-- Spring -->
 		<dependency>

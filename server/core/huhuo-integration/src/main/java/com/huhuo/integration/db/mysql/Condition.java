@@ -1,7 +1,6 @@
 package com.huhuo.integration.db.mysql;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +35,12 @@ public class Condition<T> {
 		super();
 	}
 	
-	public Condition(T t, Page page, Order... orders) {
+	public Condition(T t, List<Group> groupList, List<Order> orderList, Page page) {
 		super();
 		this.t = t;
+		this.groupList = groupList;
+		this.orderList = orderList;
 		this.page = page;
-		if(orders.length>0){
-			this.orderList = Arrays.asList(orders);
-		}
 	}
 
 	public T getT() {

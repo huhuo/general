@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.util.ReflectionUtils;
 
-import com.huhuo.integration.base.BaseModel;
 import com.huhuo.integration.base.IBaseModel;
 import com.huhuo.integration.exception.DaoException;
 
@@ -75,7 +74,7 @@ public class BeanHelper<T> {
 		return BeanHelper.getGetterSetter(entityBean.getClass());
 	}
 	
-	private static Map<Class<?>,GetterSetter[]> getterSetterMap = new HashMap<Class<?>,GetterSetter[]>();
+	private static Map<Class<?>, GetterSetter[]> getterSetterMap = new HashMap<Class<?>, GetterSetter[]>();
 	
 	public static <T> GetterSetter[] getGetterSetter(final Class<T> beanClazz){
 		GetterSetter[] getterSetterArr = getterSetterMap.get(beanClazz);
@@ -84,10 +83,11 @@ public class BeanHelper<T> {
 		}
 		BeanInfo beanInfo = null;
 		try{
-			if(BaseModel.class.isAssignableFrom(beanClazz))
-				beanInfo = Introspector.getBeanInfo(beanClazz, BaseModel.class);
-			else
-				beanInfo = Introspector.getBeanInfo(beanClazz);
+//			if(BaseModel.class.isAssignableFrom(beanClazz))
+//				beanInfo = Introspector.getBeanInfo(beanClazz, BaseModel.class);
+//			else
+//				beanInfo = Introspector.getBeanInfo(beanClazz);
+			beanInfo = Introspector.getBeanInfo(beanClazz);
 		}catch(final IntrospectionException ex){
 			BeanHelper.logger.error("null", ex);
 		}
