@@ -21,24 +21,24 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$('li.leftdivchange').click(function() {
-			
+		$('a.huhuoItem').click(function() {
+
 			//屏蔽要加载页面的div
 			$('div.loaddiv').block({
 				message : "<img src='images/busy.gif' style='margin:20%' />",
-				css:{
-					 top: '38%',
-					 border: 'none', 
-					 backgroundColor: '#fff',
-					 height:'100%',
-					 width:'100%',
-					 opacity: .5,
+				css : {
+					top : '38%',
+					border : 'none',
+					backgroundColor : '#fff',
+					height : '100%',
+					width : '100%',
+					opacity : .5,
 				}
 
 			});
-
+			console.info($(this).attr("targetUrl"));
 			//加载对应页面
-			$('div.loaddiv').load("4.html", function() {
+			$('div.loaddiv').load($(this).attr("targetUrl"), function() {
 				$('this').unblock();
 			})
 		});
@@ -58,7 +58,11 @@
 					<div class="span2 well" style="min-height: 500px">
 						<ul class="nav nav-tabs nav-stacked">
 							<li data-toggle="collapse" data-target="#demo"><a href="#">首页</a></li>
-							<li id="demo" class="collapse leftdivchange"><a href="#">1介绍</a></li>
+							<li id="demo" class="collapse leftdivchange">
+								<a class="huhuoItem" href="#" targetUrl="4.html">美容</a>
+								<a class="huhuoItem" href="#" targetUrl="3.html">美食</a>
+							
+							</li>
 							<li><a href="#">介绍</a></li>
 							<li><a href="#">消息</a></li>
 						</ul>
