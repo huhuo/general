@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="3 seconds">
+	<property name="storePath" value="/eray/data/statisticService/logback" />
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+	<!-- Console -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Plain Text Rolling Appender -->
+	<appender name="ALL-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/all/statistic-service.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/all/statistic-service.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- An specific Appender for Performance logs -->
+	<appender name="USER-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/user-log/user_log.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/user-log/user_log.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- All the logs called with LoggerFactory.getLogger("performance") will 
+		go trough this logger -->
+	<logger name="com.eraymobile.client.controller.UserStatistController" level="INFO" additivity="true">
+		<appender-ref ref="USER-LOG" />
+	</logger>
+
+	<logger name="ch.qos" level="OFF" />
+	<logger name="org.slf4j" level="OFF" />
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="ALL-FILE" />
+	</root>
+</configuration>

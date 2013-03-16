@@ -13,6 +13,8 @@
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 		<spring.framework.version>3.1.0.RELEASE</spring.framework.version>
 		<org.aspectj-version>1.6.9</org.aspectj-version>
+		<org.slf4j-version>1.7.2</org.slf4j-version>
+		<logback-version>1.0.9</logback-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -114,44 +116,34 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.5.10</version>
+			<version>${org.slf4j-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.5.10</version>
+			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.10</version>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback-version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-version}</version>
 			<scope>runtime</scope>
 		</dependency>
+
 		<!-- servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -162,7 +154,7 @@
 		<!-- mail -->
 		<!-- <dependency> <groupId>activation</groupId> <artifactId>activation</artifactId> 
 			<version>1.0.2</version> </dependency> -->
-		
+
 		<!-- memcache -->
 		<dependency>
 			<groupId>com.googlecode.xmemcached</groupId>
@@ -173,8 +165,8 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
-		<version>4.1</version>
-</dependency>
+			<version>4.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -183,11 +175,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 
