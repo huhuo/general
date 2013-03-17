@@ -10,31 +10,31 @@
 	<properties>
 		<java-version>1.6</java-version>
 		<maven-eclipse-plugin-version>2.9</maven-eclipse-plugin-version>
-		
+
 		<org.springframework-version>3.1.0.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 		<org.junit-version>4.7</org.junit-version>
-		<org.log4j-version>1.2.15</org.log4j-version>
-		
-		<huhuo.system.manage-version>1.0.0</huhuo.system.manage-version>
+		<logback-version>1.0.9</logback-version>
+
+		<car.module.system-version>1.0.0</car.module.system-version>
 		<car.module.consumer-version>1.0.0</car.module.consumer-version>
 		<car.module.car-version>1.0.0</car.module.car-version>
 		<car.module.order-version>1.0.0</car.module.order-version>
-		
+
 	</properties>
-	
+
 	<dependencies>
-<!-- 		<dependency>
+		<dependency>
 			<groupId>com.huhuo</groupId>
-		    <artifactId>huhuo-system-manage</artifactId>
-		    <version>${huhuo.system.manage-version}</version>
-		</dependency> -->
+			<artifactId>car-module-system</artifactId>
+			<version>${car.module.system-version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.huhuo</groupId>
 			<artifactId>car-module-consumer</artifactId>
 			<version>${car.module.consumer-version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.huhuo</groupId>
 			<artifactId>car-module-car</artifactId>
@@ -63,49 +63,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${org.log4j-version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
-		</dependency>
-		
+
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -120,7 +78,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>

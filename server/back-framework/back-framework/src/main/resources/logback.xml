@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="3 seconds">
+	<property name="storePath" value="/huhuo/data/car-rental/logback" />
+	<!-- <property name="storePath" value="d:/huhuo/data/car-rental/logback" /> -->
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+	<!-- Console -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %-5level %logger{35}:%line %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Plain Text Rolling Appender -->
+	<appender name="ALL-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/all/car-rental.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/all/car-rental.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- An specific Appender for Performance logs -->
+	<appender name="car-module-car" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/car-module/car/car-module.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/car-module/car/car-module.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="car-module-consumer" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/car-module/consumer/car-module.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/car-module/consumer/car-module.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="car-module-order" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/car-module/order/car-module.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/car-module/order/car-module.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="car-module-system" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/car-module/system/car-module.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/car-module/system/car-module.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="car-module-core" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/car-module/core/car-module.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/car-module/core/car-module.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="car-module-integration" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${storePath}/car-module/integration/car-module.log</File>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss} %level %logger:%line %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${storePath}/car-module/integration/car-module.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>365</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<!-- All the logs called with LoggerFactory.getLogger("performance") will 
+		go trough this logger -->
+	<logger name="com.huhuo.cmcar" level="INFO" additivity="true">
+		<appender-ref ref="car-module-car" />
+	</logger>
+	<logger name="com.huhuo.cmconsumer" level="INFO" additivity="true">
+		<appender-ref ref="car-module-consumer" />
+	</logger>
+	<logger name="com.huhuo.cmorder" level="INFO" additivity="true">
+		<appender-ref ref="car-module-order" />
+	</logger>
+	<logger name="com.huhuo.cmsystem" level="INFO" additivity="true">
+		<appender-ref ref="car-module-system" />
+	</logger>
+	<logger name="com.huhuo.carservicecore" level="INFO" additivity="true">
+		<appender-ref ref="car-module-core" />
+	</logger>
+	<logger name="com.huhuo.integration" level="INFO" additivity="true">
+		<appender-ref ref="car-module-integration" />
+	</logger>
+
+	<logger name="ch.qos" level="OFF" />
+	<logger name="org.slf4j" level="INFO" />
+	<logger name="com.google.code" level="INFO" />
+	<logger name="net.rubyeye.xmemcached" level="INFO" />
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="ALL-FILE" />
+	</root>
+</configuration>
