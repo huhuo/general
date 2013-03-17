@@ -7,33 +7,84 @@
 <!-- Bootstrap -->
 <link href="js/bootstrap/css/bootstrap.css" rel="stylesheet"
 	media="screen">
-<script src="js/jquery/jquery.js"></script>
-<script src="js/bootstrap/js/bootstrap.js"></script>
-<script src="js/jquery/jquery.blockUI.js"></script>
+<script src="js/jquery/jquery.js" type="text/javascript"></script>
+<script src="js/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<script src="js/jquery/jquery.blockUI.js" type="text/javascript"></script>
+
 <script type="text/javascript">
-	jQuery.fn.myPage=function(pageVar,sizeVar,pageNo,size,total,url,loadDiv,toolSize){
-		console.info(url);
-		var ul=document.createElement("ul");
-		$(this).append(ul);
-		console.info($(this));
-		var liStart=document.createElement("li");
-		$(liStart).append("<a href='"+url+pageNo+"'>«</a>");
-		var liStart=document.createElement("li");
-		if(pageNo==1){
-			
-			
+	jQuery.extend({
+		pageAddA : function(ul,li,innerhtml,b,s,targetUrl,loadDiv) {
+
+			var a = $("<a/>");
+			a.html(innerhtml);
+			a.attr("href", $.setUrlparams(targetUrl, {
+				"b" : b,
+				"s" : s
+			}));
+
+			a.click(function() {
+
+			//	return false;
+			});
+			li.append(a);
+			ul.append(li);
 		}
-		
-		$(ul).append("<li><a href='#'>«</a></li>")
-		
-		
-	};
-	$(document).ready(function(){
-		
-	$("#bb").myPage("http://www.baidu.com",2,90,10);
+	});
+	jQuery.extend({
+		setUrlparams : function(url, params) {
+
+			var paramStr = $.param(params);
+			if (url.indexOf("?") == -1) {
+				/* 不需要的操作
+				if(url.lastIndexOf('/')==url.length-1){
+					url=url.subString(0,url.length-1)
+				}
+				*/
+				url = url + "?" + paramStr;
+			} else {
+				url = url + paramStr;
+			}
+			return url;
+		}
 	});
 
+	jQuery.fn.myPage = function(pageNo, size, total, targetUrl, loadDiv,
+			toolSize) {
+		console.info(targetUrl);
+		var ul = $("<ul/>");
+		$(this).append(ul);
+		console.info($(this));
 
+		//添加《《元素
+		var liStart = $("<li/>");
+
+		var liPre = $("<li/>");
+		//判断按钮是否能点击
+		if (pageNo < 2) {
+			liStart.addClass("disabled");
+			liPre.addClass("disabled");
+		} else {
+			liStart.addClass("active");
+			liPre.addClass("active");
+		}
+		
+		$.pageAddA(ul,liStart,"«",1,size,targetUrl,loadDiv);
+		$.pageAddA(ul,liPre,"<",pageNo-1,size	,targetUrl,loadDiv);
+		
+		
+
+		
+
+		var liStart = document.createElement("li");
+		if (pageNo == 1) {
+
+		}
+
+	};
+	$(document).ready(function() {
+
+		$("#bb").myPage(2, 10, 90, "http://www.baidu.com", null, 5);
+	});
 </script>
 
 
@@ -42,8 +93,7 @@
 </head>
 <body>
 
-	<div id="bb" class="pagination pagination-centered">
-	</div>
+	<div id="bb" class="pagination pagination-centered"></div>
 	<div class="pagination pagination-centered">
 		<ul>
 			<li><a href="#">«</a></li>
