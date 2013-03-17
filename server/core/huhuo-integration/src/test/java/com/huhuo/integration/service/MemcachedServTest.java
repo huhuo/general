@@ -3,15 +3,13 @@ package com.huhuo.integration.service;
 import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.huhuo.integration.service.MemcachedServ;
+import com.huhuo.integration.HuhuoIntegrationTest;
 
-@ContextConfiguration(locations = "classpath:config/app-context-memcached.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
-public class MemcachedServTest {
+@ContextConfiguration(locations = "classpath:conf/app-context-memcached.xml")
+public class MemcachedServTest extends HuhuoIntegrationTest {
+	
 	@Resource(name = "memcachedService")
 	private MemcachedServ memServ;
 	String region = "region1";

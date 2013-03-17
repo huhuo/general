@@ -5,11 +5,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<util:properties id="servProps" location="classpath:config/system.properties" />
+	<util:properties id="servProps" location="classpath:conf/system.properties" />
 
 	<!--
 	=================
-	ZHttpClientServ
+	HttpClientServ
 	=================
 	-->
 	
@@ -18,7 +18,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="maxTotalConnections" value="512"/>
 	</bean>
 
-	<bean id="zHttpClientServ" class="com.huhuo.integration.service.ZHttpClientServ" scope="prototype">
+	<bean id="huhuointegrationHttpClientServ" class="com.huhuo.integration.service.HttpClientServ" scope="prototype">
 		<constructor-arg type="java.util.Map">
 			<map>
 				<entry key="http.protocol.expect-continue"><value type="java.lang.Boolean">false</value></entry> <!-- solve too many open files -->
@@ -34,7 +34,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	
 	<!--
 	=================
-	config other service
+	conf other service
 	=================
 	-->
 </beans>

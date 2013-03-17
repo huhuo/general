@@ -31,38 +31,38 @@ import com.huhuo.integration.web.Message.Status;
 /**
  * Provide service for HTTP client. Default encoding is UTF-8 for request data or reponse data.<br>
  * 
- * @author shifengxuan
+ * @author wuyuxuan
  *
  */
-public class ZHttpClientServ {
+public class HttpClientServ {
 	protected HttpClient httpClient;
 	private String defaultEncoding = GlobalConstant.Encoding.UTF8;
-	private static Logger logger = LoggerFactory.getLogger(ZHttpClientServ.class);
+	private static Logger logger = LoggerFactory.getLogger(HttpClientServ.class);
 	
 	/**
-	 * See {@link #ZHttpClientServ(HttpClientParams, HttpConnectionManager)}
+	 * See {@link #HttpClientServ(HttpClientParams, HttpConnectionManager)}
 	 */
-	public ZHttpClientServ() {
+	public HttpClientServ() {
 		this((HttpClientParams)null, null);
 	}
 	
 	/**
-	 * See {@link #ZHttpClientServ(Map, HttpConnectionManager)}
+	 * See {@link #HttpClientServ(Map, HttpConnectionManager)}
 	 * 
 	 * @param params
 	 */
-	public ZHttpClientServ(Map<String, Object> params){
+	public HttpClientServ(Map<String, Object> params){
 		this(params, null);
 	}
 	
 	/**
-	 * See {@link #ZHttpClientServ(HttpClientParams, HttpConnectionManager)}
+	 * See {@link #HttpClientServ(HttpClientParams, HttpConnectionManager)}
 	 * 
 	 * @param params
 	 *            used to set parameters of HttpClientParams
 	 * @param httpConnectionManager
 	 */
-	public ZHttpClientServ(Map<String, Object> params, HttpConnectionManager httpConnectionManager) {
+	public HttpClientServ(Map<String, Object> params, HttpConnectionManager httpConnectionManager) {
 		this((HttpClientParams)null, httpConnectionManager);
 		Iterator<String> it = params.keySet().iterator();
 		while(it.hasNext()){
@@ -72,21 +72,21 @@ public class ZHttpClientServ {
 	}
 	
 	/**
-	 * See {@link #ZHttpClientServ(HttpClientParams, HttpConnectionManager)}
+	 * See {@link #HttpClientServ(HttpClientParams, HttpConnectionManager)}
 	 * 
 	 * @param params
 	 */
-	public ZHttpClientServ(HttpClientParams params){
+	public HttpClientServ(HttpClientParams params){
 		this(params, null);
 	}
 	
 	/**
-	 * Creates an instance of ZHttpClientServ using a user specified.
+	 * Creates an instance of HttpClientServ using a user specified.
 	 * {@link HttpClientParams}, {@link HttpConnectionManager}
 	 * @param params
 	 * @param httpConnectionManager
 	 */
-	public ZHttpClientServ(HttpClientParams params, HttpConnectionManager httpConnectionManager){
+	public HttpClientServ(HttpClientParams params, HttpConnectionManager httpConnectionManager){
 		if(params==null && httpConnectionManager==null){
 			httpClient = new HttpClient();
 		}else if(params==null){
@@ -99,11 +99,11 @@ public class ZHttpClientServ {
 	}
 	
 	/**
-	 * See {@link #ZHttpClientServ(HttpClientParams, HttpConnectionManager)}
+	 * See {@link #HttpClientServ(HttpClientParams, HttpConnectionManager)}
 	 * 
 	 * @param httpConnectionManager
 	 */
-	public ZHttpClientServ(HttpConnectionManager httpConnectionManager){
+	public HttpClientServ(HttpConnectionManager httpConnectionManager){
 		this((HttpClientParams)null, httpConnectionManager);
 	}
 	
@@ -154,7 +154,7 @@ public class ZHttpClientServ {
 	 *            request. isForceCloseConnection is true, together with
 	 *            http.protocol.expect-continue is false, can solve problem
 	 *            about 'Too many open files' in linux when create many
-	 *            {@link ZHttpClientServ} instance. <br>false: the connection is
+	 *            {@link HttpClientServ} instance. <br>false: the connection is
 	 *            managed by HttpConnectionManager, not ensure it is closed.
 	 * 
 	 * @return {@link Message} object
