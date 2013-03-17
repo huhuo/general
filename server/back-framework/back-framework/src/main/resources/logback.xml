@@ -159,7 +159,9 @@
 	</logger>
 
 	<logger name="ch.qos" level="OFF" />
-	<logger name="org.slf4j" level="OFF" />
+	<logger name="org.slf4j" level="INFO" />
+	<logger name="com.google.code" level="INFO" />
+	<logger name="net.rubyeye.xmemcached" level="INFO" />
 
 	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
