@@ -13,7 +13,8 @@
 
 <script type="text/javascript">
 	jQuery.extend({
-		pageAddA : function(ul,li,innerhtml,b,s,targetUrl,loadDiv) {
+		pageAddA : function(ul, li, innerhtml, b, s, targetUrl, loadDiv,
+				iscurrent) {
 
 			var a = $("<a/>");
 			a.html(innerhtml);
@@ -21,10 +22,30 @@
 				"b" : b,
 				"s" : s
 			}));
+			if (iscurrent) {
+				a.css({
+					"background-color" : "#F5F5F5",
+					"color" : "#005580"
+				});
+				a.hover(function() {
+					a.css({
+						"background-color" : "#FFFFFF",
+						"color" : "#0088CC"
+					});
+				}, function() {
+					a.css({
+						"background-color" : "#F5F5F5",
+						"color" : "#005580"
+					});
+				});
+			}
 
 			a.click(function() {
+				//如果不能点击，直接设置
+				if (li.hasClass("disabled"))
+					return false;
 
-			//	return false;
+				return false;
 			});
 			li.append(a);
 			ul.append(li);
@@ -39,7 +60,7 @@
 				if(url.lastIndexOf('/')==url.length-1){
 					url=url.subString(0,url.length-1)
 				}
-				*/
+				 */
 				url = url + "?" + paramStr;
 			} else {
 				url = url + paramStr;
@@ -50,7 +71,9 @@
 
 	jQuery.fn.myPage = function(pageNo, size, total, targetUrl, loadDiv,
 			toolSize) {
-		console.info(targetUrl);
+
+		var countPage = total % size == 0 ? parseInt(total / size)
+				: parseInt(total / size + 1);
 		var ul = $("<ul/>");
 		$(this).append(ul);
 		console.info($(this));
@@ -63,17 +86,57 @@
 		if (pageNo < 2) {
 			liStart.addClass("disabled");
 			liPre.addClass("disabled");
-		} else {
-			liStart.addClass("active");
-			liPre.addClass("active");
 		}
-		
-		$.pageAddA(ul,liStart,"«",1,size,targetUrl,loadDiv);
-		$.pageAddA(ul,liPre,"<",pageNo-1,size	,targetUrl,loadDiv);
-		
-		
 
-		
+		$.pageAddA(ul, liStart, "«", 1, size, targetUrl, loadDiv, false);
+		$.pageAddA(ul, liPre, "<", pageNo - 1, size, targetUrl, loadDiv, false);
+
+		var start = 1;
+
+		var end = 1;
+
+		if (toolSize >= countPage) {
+			end = countPage;
+		} else {
+			var halfSize = parseInt(toolSize / 2);
+			start = pageNo - halfSize;
+			if (toolSize % 2 == 1) {
+				end = pageNo + halfSize;
+			} else {
+				end = pageNo + halfSize - 1;
+			}
+
+			if (start < 1) {
+				start = 1;
+				end = toolSize;
+			}
+			if (end > countPage) {
+				end = countPage;
+				start = countPage - toolSize + 1;
+			}
+		}
+		console.info(start);
+		console.info(end);
+
+		for ( var i = start; i <= end; i++) {
+			var livar = $("<li/>");
+			$.pageAddA(ul, livar, i, i, size, targetUrl, loadDiv, pageNo == i);
+		}
+
+		//添加>>元素
+		var liEnd = $("<li/>");
+
+		var liNext = $("<li/>");
+		//判断按钮是否能点击
+		if (pageNo >= countPage - 1) {
+			liNext.addClass("disabled");
+			liEnd.addClass("disabled");
+		}
+
+		$
+				.pageAddA(ul, liNext, ">", pageNo + 1, size, targetUrl,
+						loadDiv, false);
+		$.pageAddA(ul, liEnd, "»", countPage, size, targetUrl, loadDiv, false);
 
 		var liStart = document.createElement("li");
 		if (pageNo == 1) {
@@ -83,7 +146,7 @@
 	};
 	$(document).ready(function() {
 
-		$("#bb").myPage(2, 10, 90, "http://www.baidu.com", null, 5);
+		$("#bb").myPage(9, 10, 100, "http://www.baidu.com", null, 5);
 	});
 </script>
 
@@ -93,17 +156,66 @@
 </head>
 <body>
 
-	<div id="bb" class="pagination pagination-centered"></div>
-	<div class="pagination pagination-centered">
-		<ul>
-			<li><a href="#">«</a></li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">»</a></li>
-		</ul>
+	<div id="pagediv" dateUrl="",dateSize="",>
+		<table class="table table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>电视剧</th>
+					<th>类型</th>
+					<th>年代</th>
+					<th>电视剧</th>
+					<th>类型</th>
+					<th>年代</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>爱情公寓</td>
+					<td>都市爱情喜剧</td>
+					<td>2010</td>
+					<td>爱情公寓</td>
+					<td>都市爱情喜剧</td>
+					<td>2010</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>邪恶力量</td>
+					<td>悬疑魔幻</td>
+					<td>2005</td>
+					<td>爱情公寓</td>
+					<td>都市爱情喜剧</td>
+					<td>2010</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>神探伽俐略</td>
+					<td>推理探案</td>
+					<td>2008</td>
+					<td>爱情公寓</td>
+					<td>都市爱情喜剧</td>
+					<td>2010</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+		<!-- style="position:fixed;top:150px;left:1100px" -->
+		<div class="pagination pagination-centered">
+			<ul>
+				<li><a href="#">«</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</div>
 	</div>
+
+
+
 </body>
 </html>
