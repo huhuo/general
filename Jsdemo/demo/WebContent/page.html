@@ -10,143 +10,12 @@
 <script src="js/jquery/jquery.js" type="text/javascript"></script>
 <script src="js/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="js/jquery/jquery.blockUI.js" type="text/javascript"></script>
+<script src="js/huhuo.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-	jQuery.extend({
-		pageAddA : function(ul, li, innerhtml, b, s, targetUrl, loadDiv,
-				iscurrent) {
-
-			var a = $("<a/>");
-			a.html(innerhtml);
-			a.attr("href", $.setUrlparams(targetUrl, {
-				"b" : b,
-				"s" : s
-			}));
-			if (iscurrent) {
-				a.css({
-					"background-color" : "#F5F5F5",
-					"color" : "#005580"
-				});
-				a.hover(function() {
-					a.css({
-						"background-color" : "#FFFFFF",
-						"color" : "#0088CC"
-					});
-				}, function() {
-					a.css({
-						"background-color" : "#F5F5F5",
-						"color" : "#005580"
-					});
-				});
-			}
-
-			a.click(function() {
-				//如果不能点击，直接设置
-				if (li.hasClass("disabled"))
-					return false;
-
-				return false;
-			});
-			li.append(a);
-			ul.append(li);
-		}
-	});
-	jQuery.extend({
-		setUrlparams : function(url, params) {
-
-			var paramStr = $.param(params);
-			if (url.indexOf("?") == -1) {
-				/* 不需要的操作
-				if(url.lastIndexOf('/')==url.length-1){
-					url=url.subString(0,url.length-1)
-				}
-				 */
-				url = url + "?" + paramStr;
-			} else {
-				url = url + paramStr;
-			}
-			return url;
-		}
-	});
-
-	jQuery.fn.myPage = function(pageNo, size, total, targetUrl, loadDiv,
-			toolSize) {
-
-		var countPage = total % size == 0 ? parseInt(total / size)
-				: parseInt(total / size + 1);
-		var ul = $("<ul/>");
-		$(this).append(ul);
-		console.info($(this));
-
-		//添加《《元素
-		var liStart = $("<li/>");
-
-		var liPre = $("<li/>");
-		//判断按钮是否能点击
-		if (pageNo < 2) {
-			liStart.addClass("disabled");
-			liPre.addClass("disabled");
-		}
-
-		$.pageAddA(ul, liStart, "«", 1, size, targetUrl, loadDiv, false);
-		$.pageAddA(ul, liPre, "<", pageNo - 1, size, targetUrl, loadDiv, false);
-
-		var start = 1;
-
-		var end = 1;
-
-		if (toolSize >= countPage) {
-			end = countPage;
-		} else {
-			var halfSize = parseInt(toolSize / 2);
-			start = pageNo - halfSize;
-			if (toolSize % 2 == 1) {
-				end = pageNo + halfSize;
-			} else {
-				end = pageNo + halfSize - 1;
-			}
-
-			if (start < 1) {
-				start = 1;
-				end = toolSize;
-			}
-			if (end > countPage) {
-				end = countPage;
-				start = countPage - toolSize + 1;
-			}
-		}
-		console.info(start);
-		console.info(end);
-
-		for ( var i = start; i <= end; i++) {
-			var livar = $("<li/>");
-			$.pageAddA(ul, livar, i, i, size, targetUrl, loadDiv, pageNo == i);
-		}
-
-		//添加>>元素
-		var liEnd = $("<li/>");
-
-		var liNext = $("<li/>");
-		//判断按钮是否能点击
-		if (pageNo >= countPage - 1) {
-			liNext.addClass("disabled");
-			liEnd.addClass("disabled");
-		}
-
-		$
-				.pageAddA(ul, liNext, ">", pageNo + 1, size, targetUrl,
-						loadDiv, false);
-		$.pageAddA(ul, liEnd, "»", countPage, size, targetUrl, loadDiv, false);
-
-		var liStart = document.createElement("li");
-		if (pageNo == 1) {
-
-		}
-
-	};
 	$(document).ready(function() {
 
-		$("#bb").myPage(9, 10, 100, "http://www.baidu.com", null, 5);
+		$("#bb").myPage(9, 10, 100, "table.html",{aa:1,bb:2}, $("#pagediv"), 5);
 	});
 </script>
 
@@ -155,8 +24,9 @@
 
 </head>
 <body>
+	<div id="aa"></div>
 
-	<div id="pagediv" dateUrl="",dateSize="",>
+	<div id="pagediv">
 		<table class="table table-hover table-condensed">
 			<thead>
 				<tr>
@@ -202,17 +72,7 @@
 
 		</table>
 		<!-- style="position:fixed;top:150px;left:1100px" -->
-		<div class="pagination pagination-centered">
-			<ul>
-				<li><a href="#">«</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">»</a></li>
-			</ul>
-		</div>
+		<div id="bb" class="pagination pagination-centered"></div>
 	</div>
 
 
