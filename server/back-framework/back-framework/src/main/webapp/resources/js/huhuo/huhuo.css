@@ -1,0 +1,35 @@
+/**
+	关于在bootstrap基础上调节的样式修改
+
+**/
+
+.table-hover tbody tr:hover>td,.table-hover tbody tr:hover>th {
+	background-color: #5D89F8;
+	color: #FFF;
+}
+
+.nav-tabs>li>a:hover,.nav-tabs>li>a:focus {
+	background-color: #9DCFE8;
+}
+
+.nav-tabs>li>a {
+	background-color: #F3F4F9;
+}
+
+.nav-tabs.nav-stacked>li>a.huhuoItem {
+	padding-left: 30px;
+	border-style: solid;
+	border-width:0px 1px 0px 1px;
+	border-color: #DDDDDD;
+}
+.nav-tabs.nav-stacked>li>a.huhuoItem.first {
+	border-top-width:1px;
+}
+.nav-tabs.nav-stacked>li>a.huhuoItem.end {
+	border-bottom-width:1px;
+}
+
+.nav-tabs.nav-stacked>li>a.huhuoItem:hover {
+	background-color: #5D89F8;
+	color: #FFF;
+}
