@@ -8,10 +8,51 @@ import java.util.GregorianCalendar;
 
 public class TimeUtils {
 	
-	private static String patternShort = "yyyy-MM-dd";
-	
-	private static String patternLong = "yyyy-MM-dd HH:mm:ss";
-	
+	enum HPattern {
+		SHORT("yyyy-MM-dd"),	// yyyy-MM-dd
+		LONG("yyyy-MM-dd HH:mm:ss"),	// yyyy-MM-dd HH:mm:ss
+		;
+		
+		private String value;
+		HPattern(String value) {
+			this.value = value;
+		}
+		/**
+		 * get value of this enumeration
+		 */
+		public String getValue() {
+			return value;
+		}
+	}
+	/**
+	 * 获取距离baseTime偏离offset个月的日期
+	 * @param offset
+	 * @param baseTime
+	 * @return
+	 */
+	public static Date offsetMonth(int offset, Date baseTime) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(baseTime);
+		c.add(Calendar.MONTH, offset);
+		return c.getTime();
+	}
+	/**
+	 * @param offset 偏离量（负数则为baseTime之前offset天的时间）
+	 * @param baseTime 基准时间
+	 * @return 返回baseTime为基准，偏离offset天后的时间
+	 */
+	public static Date offsetDate(int offset, long baseTime) {
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(baseTime);
+		c.add(Calendar.DATE, offset);
+		return c.getTime();
+	}
+	/**
+	 * @see #offsetDate(int, long)
+	 */
+	public static Date offsetDate(int offset, Date baseTime) {
+		return offsetDate(offset, baseTime.getTime());
+	}
 	/**
 	 * Adds or subtracts the specified amount of time to the given calendar field,
      * based on the calendar's rules. For example, to subtract 5 days from
@@ -21,34 +62,17 @@ public class TimeUtils {
 	 * @param baseTime 基准时间
 	 * @return 返回baseTime为基准，偏离offset小时后的时间
 	 */
-	public static long getHour(int offset, long baseTime) {
+	public static Date offsetHour(int offset, long baseTime) {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(baseTime);
 		c.add(Calendar.HOUR_OF_DAY, offset);
-		return c.getTimeInMillis();
+		return c.getTime();
 	}
 	/**
-	 * @see #getDate(int, long)
+	 * @see #offsetDate(int, long)
 	 */
-	public static long getHour(int offset, Date baseTime) {
-		return getHour(offset, baseTime.getTime());
-	}
-	/**
-	 * @param offset 偏离量（负数则为baseTime之前offset天的时间）
-	 * @param baseTime 基准时间
-	 * @return 返回baseTime为基准，偏离offset天后的时间
-	 */
-	public static long getDate(int offset, long baseTime) {
-		Calendar c = Calendar.getInstance();
-		c.setTimeInMillis(baseTime);
-		c.add(Calendar.DATE, offset);
-		return c.getTimeInMillis();
-	}
-	/**
-	 * @see #getDate(int, long)
-	 */
-	public static long getDate(int offset, Date baseTime) {
-		return getDate(offset, baseTime.getTime());
+	public static Date offsetHour(int offset, Date baseTime) {
+		return offsetHour(offset, baseTime.getTime());
 	}
 	/**
 	 * 
@@ -56,61 +80,18 @@ public class TimeUtils {
 	 * @param baseTime 基准时间
 	 * @return 返回baseTime为基准，偏离offset分钟后的时间
 	 */
-	public static long getMinute(int offset, long baseTime) {
+	public static long offsetMinute(int offset, long baseTime) {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(baseTime);
 		c.add(Calendar.MINUTE, offset);
 		return c.getTimeInMillis();
 	}
 	/**
-	 * @see #getMinute(int, long)
+	 * @see #offsetMinute(int, long)
 	 */
-	public static long getMinute(int offset, Date baseTime) {
-		return getMinute(offset, baseTime.getTime());
+	public static long offsetMinute(int offset, Date baseTime) {
+		return offsetMinute(offset, baseTime.getTime());
 	}
-	/**
-	 * 获取距离baseTime偏离offset个月的日期
-	 * @param offset
-	 * @param baseTime
-	 * @return
-	 */
-	public static Date getMonth(int offset, Date baseTime) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(baseTime);
-		c.add(Calendar.MONTH, offset);
-		return c.getTime();
-	}
-	/**
-	 * 根据字符串date转化成所需的日期
-	 * @param date 格式：yyyy-MM-dd HH:mm:ss
-	 * @return 如果出现异常，则返回null
-	 */
-	public static Date getLongDate(String date) {
-		SimpleDateFormat f = new SimpleDateFormat();
-		try {
-			f.applyPattern(patternLong);
-			return f.parse(date);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	/**
-	 * 根据字符串date转化成所需的日期
-	 * @param date 格式：yyyy-MM-dd
-	 * @return 如果出现异常，则返回null
-	 */
-	public static Date getShortDate(String date) {
-		SimpleDateFormat f = new SimpleDateFormat();
-		try {
-			f.applyPattern(patternShort);
-			return f.parse(date);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	/**计算给定Calendar的日期是当年第几天,如果是1月1日则返回去年的天数。
 	 * @param offset （负数则为Calendar之前offset天）
 	 * @param c
@@ -154,6 +135,12 @@ public class TimeUtils {
 		return null;
 	}
 	/**
+	 * @see #parse(String, String)
+	 */
+	public static Date parse(String date, HPattern pattern) {
+		return parse(date, pattern.getValue());
+	}
+	/**
 	 * 将日期date按照格式pattern转换成日期
 	 * @param date
 	 * @param pattern
@@ -163,6 +150,12 @@ public class TimeUtils {
 		return new SimpleDateFormat(pattern).format(date);
 	}
 	/**
+	 * @see #parse(Date, String)
+	 */
+	public static String parse(Date date, HPattern pattern) {
+		return parse(date, pattern.getValue());
+	}
+	/**
 	 * 获取日期date的开始时间，如2012-06-25 00:00:00
 	 * @param date
 	 * @return
@@ -170,8 +163,8 @@ public class TimeUtils {
 	public static Date getDateBeginFor(Date date) {
 		if(date == null)
 			return null;
-		String dateStr = parse(date, patternShort);
-		return parse(dateStr, patternShort);
+		String dateStr = parse(date, HPattern.SHORT);
+		return parse(dateStr, HPattern.SHORT);
 	}
 	/**
 	 * 获取日期date的结束时间，如2012-06-25 23:59:59
@@ -181,9 +174,8 @@ public class TimeUtils {
 	public static Date getDateEndFor(Date date) {
 		if(date == null)
 			return null;
-		long yesterday = getDate(1, getDateBeginFor(date));
-		yesterday = yesterday - 1000;
-		return new Date(yesterday);
+		Date tomorrow = offsetDate(1, getDateBeginFor(date));
+		return new Date(tomorrow.getTime() - 1000);
 	}
 	/**
 	 * 获取date所在的天次（如2012-06-18，则为18）
@@ -311,15 +303,15 @@ public class TimeUtils {
 	/**
 	 * 格式化date
 	 * @param date
-	 * @param fullPattern 如果fullPattern==true，则返回yyyy-MM-dd HH:mm:ss长格式日期，否则返回yyyy-MM-dd短格式日期
+	 * @param longPattern 如果fullPattern==true，则返回yyyy-MM-dd HH:mm:ss长格式日期，否则返回yyyy-MM-dd短格式日期
 	 * @return
 	 */
-	public static String format(Date date, boolean fullPattern) {
+	public static String format(Date date, boolean longPattern) {
 		String dateStr = null;
-		if(fullPattern) {
-			dateStr = parse(date, patternLong);
+		if(longPattern) {
+			dateStr = parse(date, HPattern.LONG);
 		} else {
-			dateStr = parse(date, patternShort);
+			dateStr = parse(date, HPattern.SHORT);
 		}
 		return dateStr;
 	}
@@ -337,7 +329,7 @@ public class TimeUtils {
 	 * @return
 	 */
 	public static String format(Long date) {
-		return format(new Date(date), true);
+		return format(new Date(date));
 	}
 	
 	public static void main(String[] args) {
