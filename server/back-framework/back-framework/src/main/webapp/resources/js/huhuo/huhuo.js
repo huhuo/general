@@ -102,7 +102,7 @@
 				return false;
 			//屏蔽要加载页面的div
 			loadDiv.block({
-				message : "<img src='images/busy.gif' style='margin:20%' />",
+				message : "<img src='res/images/busy.gif' style='margin:20%' />",
 				css : {
 					top : '38%',
 					border : 'none',
@@ -118,7 +118,7 @@
 
 			loadDiv.load(targetUrl,params, function() {
 				$('this').unblock();
-			})
+			});
 			return false;
 		});
 		li.append(a);
@@ -170,5 +170,95 @@
 		});
 
 	});
+
+	// form
+	$.fn.huhuoFormRefushDiv = function(loadDiv, callback) {
+		var form = $(this);
+
+		form.submit(function() {
+
+			loadDiv.block({
+				message : "<img src='images/busy.gif' style='margin:20%' />",
+				css : {
+					top : '38%',
+					border : 'none',
+					backgroundColor : '#fff',
+					height : '100%',
+					width : '100%',
+					opacity : .5,
+				}
+
+			});
+			console.info($(this).attr("href"));
+			// 加载对应页面
+
+			loadDiv.load(form.attr('action'), form.serialize(), function(
+					response, status) {
+				if (status == 'success') {
+
+					$('this').unblock();
+				} else {
+
+					$.huhuoGrowlUI("aaa");
+				}
+
+			});
+
+			return false;
+
+		});
+
+	};
+
+	// form
+	$.fn.huhuoFormPost = function(callback) {
+		var form = $(this);
+
+		form.submit(function() {
+
+			$.post(form.attr('action'), form.serialize(), function(data,
+					status) {
+
+				$.huhuoGrowlUI("hahaha");
+
+				callback(data, status);
+
+			});
+		});
+
+	};
+
+	// growUI
+	$.huhuoGrowlUI = function(message, timeout, onClose) {
+		var $m = $('<div class="growlUI"></div>');
+		if (message)
+			$m.append('<h5>' + message + '</h5>');
+		if (timeout === undefined)
+			timeout = 3000;
+		$.blockUI({
+			message : $m,
+			fadeIn : 700,
+			fadeOut : 1000,
+			centerY : false,
+			timeout : timeout,
+			showOverlay : false,
+			onUnblock : onClose,
+			css : {
+				width : '350px',
+				top : '0px',
+				left : ($(window).width() - 175) / 2 + 'px',
+				right : '',
+				border : 'none',
+				padding : '5px',
+				opacity : 0.6,
+				cursor : 'default',
+				color : '#fff',
+				backgroundColor : '#0932B9',
+				'-webkit-border-radius' : '10px',
+				'-moz-border-radius' : '10px',
+				'border-radius' : '10px'
+			}
+		});
+	};
 	
 })(jQuery);
