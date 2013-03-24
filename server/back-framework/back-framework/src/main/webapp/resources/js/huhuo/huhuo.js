@@ -174,9 +174,7 @@
 	// form
 	$.fn.huhuoFormRefushDiv = function(loadDiv, callback) {
 		var form = $(this);
-
 		form.submit(function() {
-
 			loadDiv.block({
 				message : "<img src='images/busy.gif' style='margin:20%' />",
 				css : {
@@ -191,21 +189,16 @@
 			});
 			console.info($(this).attr("href"));
 			// 加载对应页面
-
 			loadDiv.load(form.attr('action'), form.serialize(), function(
 					response, status) {
 				if (status == 'success') {
-
 					$('this').unblock();
 				} else {
-
 					$.huhuoGrowlUI("aaa");
 				}
-
+				callback(response, status);
 			});
-
 			return false;
-
 		});
 
 	};
@@ -224,8 +217,9 @@
 				callback(data, status);
 
 			});
+			return false;
 		});
-
+		
 	};
 
 	// growUI
