@@ -54,3 +54,7 @@
 body {
 	font-family: Arial,"微软雅黑";
 }
+
+.huhuo-icon-check-on {
+	background: url(../../images/status/btn_check_buttonless_on.png);
+}
