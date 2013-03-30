@@ -69,6 +69,31 @@
 
 
 	};
+	$.fn.divBlickLoad =function(targetUrl,params){
+		var loadDiv=$(this);
+		divBlockLoad(loadDiv,targetUrl,params);
+	};
+	function divBlockLoad(loadDiv,targetUrl,params){
+		loadDiv.block({
+			message : "<img src='res/images/busy.gif' style='margin:20%' />",
+			css : {
+				top : '38%',
+				border : 'none',
+				backgroundColor : '#fff',
+				height : '100%',
+				width : '100%',
+				opacity : .5,
+			}
+
+		});
+
+		console.info(targetUrl);
+		loadDiv.load(targetUrl,params, function() {
+			$('this').unblock();
+		});
+		
+	};
+	
 	//为page中每个元素简历a标签，生成对应url，并且创建点击刷新时间
 	function pageAddA(ul, li, innerhtml, b, s, targetUrl,data, loadDiv, iscurrent) {
 		var pageVar={b:b,s:s};
@@ -100,25 +125,8 @@
 			//如果不能点击，直接设置
 			if (li.hasClass("disabled"))
 				return false;
-			//屏蔽要加载页面的div
-			loadDiv.block({
-				message : "<img src='res/images/busy.gif' style='margin:20%' />",
-				css : {
-					top : '38%',
-					border : 'none',
-					backgroundColor : '#fff',
-					height : '100%',
-					width : '100%',
-					opacity : .5,
-				}
+			divBlockLoad(loadDiv,targetUrl,params);
 
-			});
-			console.info($(this).attr("href"));
-			//加载对应页面
-
-			loadDiv.load(targetUrl,params, function() {
-				$('this').unblock();
-			});
 			return false;
 		});
 		li.append(a);
@@ -150,22 +158,8 @@
 		$('a.huhuoItem').click(function() {
 
 			//屏蔽要加载页面的div
-			$('div.loaddiv').block({
-				message : "<img src='res/images/busy.gif' style='margin:20%' />",
-				css : {
-					top : '38%',
-					border : 'none',
-					backgroundColor : '#fff',
-					height : '100%',
-					width : '100%',
-					opacity : .5,
-				}
-
-			});
-			//加载对应页面
-			$('div.loaddiv').load($(this).attr("href"), function() {
-				$('this').unblock();
-			});
+			divBlockLoad($('div.loaddiv'),$(this).attr("href"));
+			
 			return false;
 		});
 
@@ -204,12 +198,16 @@
 	};
 
 	// form
-	$.fn.huhuoFormPost = function(callback) {
+	$.fn.huhuoFormPost = function(callback,url) {
 		var form = $(this);
+		var action=form.attr('action');
+		if(typeof(url)!="undefined"&&url!=null){
+			action=url;
+		}
 
 		form.submit(function() {
 
-			$.post(form.attr('action'), form.serialize(), function(data,
+			$.post(action, form.serialize(), function(data,
 					status) {
 
 				$.huhuoGrowlUI("hahaha");
