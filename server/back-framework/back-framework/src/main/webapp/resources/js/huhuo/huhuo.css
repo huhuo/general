@@ -38,7 +38,6 @@
 
 .top {
 	background: url(../../images/header-bg.jpg);
-	padding-right: 20px;
 	min-width: 748px;
 }
 
@@ -51,10 +50,28 @@
     padding: 19px;
 }
 
-body {
+body, input, button, select, textarea {
 	font-family: Arial,"微软雅黑";
 }
 
 .huhuo-icon-check-on {
 	background: url(../../images/status/btn_check_buttonless_on.png);
+}
+
+/**
+  item selected CSS for menu
+ */
+.nav-tabs.nav-stacked > li > a.huhuo-item-selected {
+    background-color: #5D89F8;
+    color: #FFFFFF;
+}
+/**
+  item selected CSS for search nav bar
+ */
+.dropdown-menu > li > a.huhuo-item-selected {
+    background-color: #0081C2;
+    background-image: linear-gradient(to bottom, #0088CC, #0077B3);
+    background-repeat: repeat-x;
+    color: #ffffff;
+    text-decoration: none;
 }
