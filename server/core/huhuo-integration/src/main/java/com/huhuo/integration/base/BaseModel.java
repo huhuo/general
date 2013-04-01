@@ -17,11 +17,11 @@ public class BaseModel implements IBaseModel<Long> {
 	/** primary key specified with name "id" and type "Long" **/
 	protected Long id;
 	/** a general mark to indicate the Model's status, it's often used to indicate the instance is logically deleted **/
-	protected Integer status = 1;
+	protected Integer status;
 	/** a general field indicating model's create time **/
-	protected Date createTime = new Date();
+	protected Date createTime;
 	/** a general field indicating model's update time ha **/
-	protected Date updateTime = new Date();
+	protected Date updateTime;
 	
 	public Long getId() {
 		return id;
