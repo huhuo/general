@@ -182,7 +182,7 @@
 		var form = $(this);
 		form.submit(function() {
 			loadDiv.block({
-				message : "<img src='images/busy.gif' style='margin:20%' />",
+				message : "<img src='res/images/busy.gif' style='margin:20%' />",
 				css : {
 					top : '38%',
 					border : 'none',
