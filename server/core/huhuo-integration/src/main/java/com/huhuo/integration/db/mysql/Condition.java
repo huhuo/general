@@ -1,6 +1,7 @@
 package com.huhuo.integration.db.mysql;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class Condition<T> {
 	/**
 	 * 备用查询包装对象
 	 */
-	protected Map<String, Object> opt;
+	protected Map<String, Object> opt=new HashMap<String,Object>();
 	/**
 	 * 分页
 	 */
