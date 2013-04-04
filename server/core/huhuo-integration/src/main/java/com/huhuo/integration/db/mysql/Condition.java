@@ -36,7 +36,7 @@ public class Condition<T> {
 		super();
 	}
 	
-	public Condition(T t, List<Group> groupList, List<Order> orderList, Page page) {
+	public Condition(T t, List<Group> groupList, List<Order> orderList, Page<T> page) {
 		super();
 		this.t = t;
 		this.groupList = groupList;
