@@ -1,8 +1,15 @@
 (function($) {
 	// page
-	$.fn.myPage = function(pageNo, size, total, targetUrl, data, loadDiv,
+	$.fn.myPage = function(page, targetUrl, data, loadDiv,
 			toolSize) {
-
+		if(page==null||typeof(page)=="undefined"){
+			return;
+		}
+		
+		var pageNo=page.pageNo;
+		var size=page.limit;
+		var total=page.total;
+		
 		var countPage = total % size == 0 ? parseInt(total / size)
 				: parseInt(total / size + 1);
 		var ul = $("<ul/>");
@@ -102,8 +109,8 @@
 	function pageAddA(ul, li, innerhtml, b, s, targetUrl, data, loadDiv,
 			iscurrent) {
 		var pageVar = {
-			b : b,
-			s : s
+			"page.pageNo" : b,
+			"page.limit" : s
 		};
 
 		console.info($.extend(data, pageVar));

@@ -2,6 +2,9 @@ package com.huhuo.integration.db.mysql;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
+import com.huhuo.integration.config.GlobalConstant;
+
 public class Page<T> {
 
 	/**
@@ -97,8 +100,11 @@ public class Page<T> {
 
 	@Override
 	public String toString() {
-		return "Page [start=" + start + ", limit=" + limit + ", total=" + total
-				+ ", pageNo=" + pageNo + ", records=" + records + "]";
+		return JSONObject.toJSONStringWithDateFormat(this,
+				GlobalConstant.DateFormat.LONG_FORMAT);
 	}
+
+
+	
 
 }

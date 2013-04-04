@@ -20,7 +20,7 @@ public class Condition<T> {
 	/**
 	 * 分页
 	 */
-	protected Page page;
+	protected Page<T> page;
 	/**
 	 * 排序（多字段）
 	 */
@@ -36,7 +36,7 @@ public class Condition<T> {
 		super();
 	}
 	
-	public Condition(T t, List<Group> groupList, List<Order> orderList, Page page) {
+	public Condition(T t, List<Group> groupList, List<Order> orderList, Page<T> page) {
 		super();
 		this.t = t;
 		this.groupList = groupList;
@@ -60,11 +60,11 @@ public class Condition<T> {
 		this.opt = opt;
 	}
 
-	public Page getPage() {
+	public Page<T> getPage() {
 		return page;
 	}
 
-	public void setPage(Page page) {
+	public void setPage(Page<T> page) {
 		this.page = page;
 	}
 
