@@ -202,7 +202,9 @@
 				} else {
 					$.huhuoGrowlUI("aaa");
 				}
-				callback(response, status);
+				if(callback!=null){
+					callback(response, status);
+				}
 			});
 			return false;
 		});
@@ -221,7 +223,9 @@
 			if (form.valid()) {
 				$.post(action, form.serialize(), function(data, status) {
 					$.huhuoGrowlUI("hahaha");
-					callback(data, status);
+					if(callback!=null){
+						callback(data, status);
+					}
 				});
 			} else {
 				$.huhuoGrowlUI("请根据提示输入正确的数据！");
