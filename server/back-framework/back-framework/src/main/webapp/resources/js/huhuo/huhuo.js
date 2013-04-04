@@ -106,8 +106,7 @@
 			s : s
 		};
 
-		var params = $.extend(data, pageVar);
-		console.info(params);
+		console.info($.extend(data, pageVar));
 		var a = $("<a/>");
 		a.html(innerhtml);
 		a.attr("href", targetUrl);
@@ -133,7 +132,7 @@
 			// 如果不能点击，直接设置
 			if (li.hasClass("disabled"))
 				return false;
-			divBlockLoad(loadDiv, targetUrl, params);
+			divBlockLoad(loadDiv, targetUrl, $.extend(data, pageVar));
 
 			return false;
 		});
