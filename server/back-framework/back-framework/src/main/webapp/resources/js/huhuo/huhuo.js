@@ -68,7 +68,7 @@
 
 		var liNext = $("<li/>");
 		// 判断按钮是否能点击
-		if (pageNo >= countPage - 1) {
+		if (pageNo >= countPage ) {
 			liNext.addClass("disabled");
 			liEnd.addClass("disabled");
 		}
