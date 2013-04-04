@@ -43,5 +43,5 @@ public interface IBaseExtenseServ<T> extends IBaseServ<T> {
 	 * @param page
 	 * @return
 	 */
-	List<T> findModels(Page page);
+	List<T> findModels(Page<T> page);
 }
