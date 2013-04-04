@@ -70,7 +70,7 @@
 		// 判断按钮是否能点击
 		if (pageNo >= countPage ) {
 			liNext.addClass("disabled");
-			liEnd.addClass("disabled");
+			liEnd.addClass("disabled"); 
 		}
 
 		pageAddA(ul, liNext, ">", pageNo + 1, size, targetUrl, data, loadDiv,
