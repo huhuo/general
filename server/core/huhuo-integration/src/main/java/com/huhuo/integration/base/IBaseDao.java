@@ -32,12 +32,19 @@ public interface IBaseDao<T> {
 	 */
 	boolean save(T t) throws DaoException;
 	/**
-	 * delete model by id
+	 * delete a record logically, just setting status field in t to be 0
 	 * @param t
 	 * @return if t==null return null, else the total number of affected row
 	 * @throws DaoException
 	 */
 	Integer delete(T t) throws DaoException;
+	/**
+	 * delete model by id, physical delete
+	 * @param t
+	 * @return
+	 * @throws DaoException
+	 */
+	Integer deletePhysical(T t) throws DaoException;
 	/**
 	 * delete model by id
 	 * @param id

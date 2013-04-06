@@ -1,34 +1,44 @@
 package com.huhuo.integration.base;
 
+import com.huhuo.integration.exception.DaoException;
+
 public interface IBaseServ <T> {
 	/**
-	 * 增加对象T
+	 * persist a new record to DB
 	 * @param t
-	 * @return 数据库影响记录条数
+	 * @return rows count affected, null if t == null
 	 */
-	Integer add(T t);
+	Integer add(T t) throws DaoException;
 	/**
-	 * 根据id查找
+	 * find object by id, with no internal Object injected
 	 * @param <V>
 	 * @param id
 	 * @return
 	 */
-	<V> T find(V id);
+	<V> T find(V id) throws DaoException;
 	/**
-	 * 删除对象T
+	 * delete a record logically, just setting status field in t to be 0
+	 * @param t
+	 * @return if t==null return null, else the total number of affected row
+	 * @throws DaoException
+	 */
+	Integer delete(T t) throws DaoException;
+	/**
+	 * delete model by id, physical delete
 	 * @param t
 	 * @return
+	 * @throws DaoException
 	 */
-	Integer delete(T t);
+	Integer deletePhysical(T t) throws DaoException;
 	/**
-	 * 修改对象T
+	 * update DB object t
 	 * @param t
-	 * @return 数据库影响记录条数
+	 * @return rows count affected, null if t == null
 	 */
-	Integer update(T t);
+	Integer update(T t) throws DaoException;
 	/**
 	 * 获取数据库表的总记录数
 	 * @return
 	 */
-	Long count();
+	Long count() throws DaoException;
 }

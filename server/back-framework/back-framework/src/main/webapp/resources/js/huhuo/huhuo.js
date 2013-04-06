@@ -6,15 +6,15 @@
 			return;
 		}
 		
-		var pageNo=page.pageNo;
-		var size=page.limit;
-		var total=page.total;
+
+		var pageNo = page.pageNo;
+		var size = page.limit;
+		var total = page.total;
 		
 		var countPage = total % size == 0 ? parseInt(total / size)
 				: parseInt(total / size + 1);
 		var ul = $("<ul/>");
 		$(this).append(ul);
-		console.info($(this));
 
 		// 添加《《元素
 		var liStart = $("<li/>");
@@ -54,8 +54,6 @@
 				start = countPage - toolSize + 1;
 			}
 		}
-		console.info(start);
-		console.info(end);
 
 		for ( var i = start; i <= end; i++) {
 			var livar = $("<li/>");
@@ -97,7 +95,6 @@
 
 		});
 
-		console.info(targetUrl);
 		loadDiv.load(targetUrl, params, function() {
 			$('this').unblock();
 		});
@@ -113,7 +110,6 @@
 			"page.limit" : s
 		};
 
-		console.info($.extend(data, pageVar));
 		var a = $("<a/>");
 		a.html(innerhtml);
 		a.attr("href", targetUrl);
@@ -193,7 +189,6 @@
 				}
 
 			});
-			console.info($(this).attr("href"));
 			// 加载对应页面
 			loadDiv.load(form.attr('action'), form.serialize(), function(
 					response, status) {
@@ -219,7 +214,6 @@
 			action = url;
 		}
 		form.submit(function() {
-			console.log(form.valid());
 			if (form.valid()) {
 				$.post(action, form.serialize(), function(data, status) {
 					$.huhuoGrowlUI("hahaha");
@@ -273,6 +267,8 @@
 	 */
 	$.isJsonObj = function(text) {
 		try {
+			if(typeof(text)=='object')
+				return true;
 			JSON.parse(text);
 			return true;
 		} catch (e) {

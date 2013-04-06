@@ -19,10 +19,9 @@ public interface IBaseExtenseServ<T> extends IBaseServ<T> {
 	 */
 	Integer addBatch(List<T> list);
 	/**
-	 * 条件选择，如果参数为空，不作为选择条件;dateTime不能为空；
-	 * 时间范围条件选择（opt.timeBegin=<dateTime<=opt.timeBegin）
+	 * query by criteria, which have relationship with and
 	 * @param condition
-	 * @return 选择记录
+	 * @return an array list of record, or empty object if there is no record match
 	 */
 	List<T> findByCondition(Condition<T> condition);
 	/**

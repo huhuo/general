@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 <configuration scan="true" scanPeriod="3 seconds">
-	<property name="storePath" value="/huhuo/data/car-rental/logback" />
-	<!-- <property name="storePath" value="d:/huhuo/data/car-rental/logback" /> -->
+	<!-- <property name="storePath" value="/huhuo/data/car-rental/logback" /> -->
+	<property name="storePath" value="d:/huhuo/data/car-rental/logback" />
 	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 	<!-- Console -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -139,22 +139,22 @@
 
 	<!-- All the logs called with LoggerFactory.getLogger("performance") will 
 		go trough this logger -->
-	<logger name="com.huhuo.cmcar" level="INFO" additivity="true">
+	<logger name="com.huhuo.cmcar" level="DEBUG" additivity="true">
 		<appender-ref ref="car-module-car" />
 	</logger>
-	<logger name="com.huhuo.cmconsumer" level="INFO" additivity="true">
+	<logger name="com.huhuo.cmconsumer" level="DEBUG" additivity="true">
 		<appender-ref ref="car-module-consumer" />
 	</logger>
-	<logger name="com.huhuo.cmorder" level="INFO" additivity="true">
+	<logger name="com.huhuo.cmorder" level="DEBUG" additivity="true">
 		<appender-ref ref="car-module-order" />
 	</logger>
-	<logger name="com.huhuo.cmsystem" level="INFO" additivity="true">
+	<logger name="com.huhuo.cmsystem" level="DEBUG" additivity="true">
 		<appender-ref ref="car-module-system" />
 	</logger>
-	<logger name="com.huhuo.carservicecore" level="INFO" additivity="true">
+	<logger name="com.huhuo.carservicecore" level="DEBUG" additivity="true">
 		<appender-ref ref="car-module-core" />
 	</logger>
-	<logger name="com.huhuo.integration" level="INFO" additivity="true">
+	<logger name="com.huhuo.integration" level="DEBUG" additivity="true">
 		<appender-ref ref="car-module-integration" />
 	</logger>
 

@@ -16,4 +16,5 @@ public class GlobalConstant {
 	public class DateFormat{
 		public static final String LONG_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	}
+	
 }

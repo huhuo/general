@@ -3,7 +3,8 @@ package com.huhuo.integration.base;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.huhuo.integration.algorithm.GzipUtils;
 import com.huhuo.integration.algorithm.HuhuoEncryptUtils;
 import com.huhuo.integration.config.GlobalConstant;
+import com.huhuo.integration.exception.CtrlException;
 
 
 public class BaseCtrl {
@@ -40,12 +42,12 @@ public class BaseCtrl {
 		ByteArrayOutputStream param = new ByteArrayOutputStream();
 		byte[] b = new byte[1024];
 		int len = 0;
-		while((len=in.read(b)) != -1) {
+		while ((len = in.read(b)) != -1) {
 			param.write(b, 0, len);
 		}
-		if(isDecrypt){
+		if (isDecrypt) {
 			b = HuhuoEncryptUtils.decrypt(param.toByteArray());
-		}else{
+		} else {
 			b = param.toByteArray();
 		}
 		return new String(b, encoding);
@@ -55,47 +57,46 @@ public class BaseCtrl {
 		return parseReqParam(in, false);
 	}
 	
-	protected void write(InputStream data, OutputStream out){
-		try{
+	protected void write(InputStream data, HttpServletResponse resp){
+		try {
 			byte[] b = new byte[1024];
 			int len = 0;
-			while((len=data.read(b))!=-1){
-				out.write(b, 0, len);
+			while ((len = data.read(b)) != -1) {
+				resp.getOutputStream().write(b, 0, len);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(ExceptionUtils.getFullStackTrace(e));
+			throw new CtrlException(e);
 		}
 	}
 	
-	protected void write(Object obj, OutputStream out){
-		write(obj, out, false, false);
+	protected void write(Object obj, HttpServletResponse resp) {
+		write(obj, resp, false, false);
 	}
 	
-	protected void write(Object obj, OutputStream out, boolean encrypted){
-		write(obj, out, encrypted, false);
+	protected void write(Object obj, HttpServletResponse resp, boolean encrypted) {
+		write(obj, resp, encrypted, false);
 	}
 	
 	/**
 	 * 将对象obj转化成json字符串后输出至客户端
 	 * @param obj 输出结果
-	 * @param out
+	 * @param resp
 	 * @param encrypted 输出结果是否需要加密
 	 * @param compressed 输出结果是否需要压缩
 	 * @throws IOException
 	 */
-	protected void write(Object obj, OutputStream out, boolean encrypted,
+	protected void write(Object obj, HttpServletResponse resp, boolean encrypted,
 			boolean compressed) {
 		try {
+			resp.addHeader("Content-Type", "application/json;charset=UTF-8");
 			String content = null;
 			if (obj instanceof String) {
 				content = String.valueOf(obj);
 			} else {
-				content = JSONObject
-						.toJSONStringWithDateFormat(obj, dateFormat);
+				content = JSONObject.toJSONStringWithDateFormat(obj, dateFormat);
 			}
-
 			byte[] response;
-
 			response = content.getBytes(encoding);
 
 			if (compressed) {
@@ -104,10 +105,10 @@ public class BaseCtrl {
 			if (encrypted) {
 				response = HuhuoEncryptUtils.decrypt(response);
 			}
-
-			out.write(response);
+			resp.getOutputStream().write(response);
 		} catch (Exception e) {
 			logger.error(ExceptionUtils.getFullStackTrace(e));
+			throw new CtrlException(e);
 		}
 	}
 

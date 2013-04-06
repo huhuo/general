@@ -60,6 +60,30 @@ public class BeanHelper<T> {
 		}
 		return false;
 	}
+	/**
+	 * judge whether propertyName in clazz be defined by Annotation isNotSqlField
+	 * @param clazz
+	 * @param propertyName
+	 * @return
+	 */
+	public static <T> boolean isNotSqlField(Class<T> clazz, final String propertyName) {
+		Field propertyField = null;
+		while (true) {
+			try {
+				propertyField = clazz.getDeclaredField(propertyName);
+				break;
+			} catch (final NoSuchFieldException nsfe) {
+				clazz = (Class<T>) clazz.getSuperclass();
+				if (clazz.equals(Object.class))
+					break;
+				continue;
+			}
+		}
+		if (propertyField != null) {
+			return propertyField.isAnnotationPresent(NotSqlField.class);
+		}
+		return false;
+	}
 	
 	public static <T> IBaseModel<T> getTargetBean(IBaseModel<T> entityBean){
 		if(!BeanHelper.isProxy(entityBean)){
@@ -96,7 +120,7 @@ public class BeanHelper<T> {
 		final List<GetterSetter> ret = new ArrayList<GetterSetter>();
 		for(final PropertyDescriptor element : pds){
 			final String propertyName = element.getName();
-			if(BeanHelper.isTransientField(beanClazz, propertyName)){
+			if(isTransientField(beanClazz, propertyName) || isNotSqlField(beanClazz, propertyName)){
 				continue;
 			}
 			getter = element.getReadMethod();
