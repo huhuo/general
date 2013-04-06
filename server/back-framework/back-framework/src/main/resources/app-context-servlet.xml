@@ -12,6 +12,9 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
+	<!-- File upload view resolver -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
 	<!-- Register the welcome.properties -->
 	<!-- <beans:bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">

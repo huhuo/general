@@ -1,8 +1,17 @@
 package com.huhuo.integration.base;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.huhuo.integration.exception.DaoException;
 
 public interface IBaseServ <T> {
+	/**
+	 * Return the JdbcTemplate for this DAO,
+	 * pre-initialized with the DataSource or set explicitly.
+	 * @return
+	 */
+	JdbcTemplate getJdbcTemplate();
+	
 	/**
 	 * persist a new record to DB
 	 * @param t

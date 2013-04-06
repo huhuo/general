@@ -2,6 +2,8 @@ package com.huhuo.integration.base;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.huhuo.integration.exception.DaoException;
 
 /**
@@ -11,6 +13,12 @@ import com.huhuo.integration.exception.DaoException;
  */
 public interface IBaseDao<T> {
 
+	/**
+	 * Return the JdbcTemplate for this DAO,
+	 * pre-initialized with the DataSource or set explicitly.
+	 * @return
+	 */
+	JdbcTemplate getJdbcTemplate();
 	/**
 	 * insert a new record, and auto assign the generated key value to id of @param t
 	 * @param t
