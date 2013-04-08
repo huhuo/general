@@ -332,7 +332,51 @@ public class TimeUtils {
 		return format(new Date(date));
 	}
 	
-	public static void main(String[] args) {
+	/**
+	 * 获取用户年龄
+	 * @param birthDay
+	 * @return
+	 * @throws Exception
+	 */
+	public static int getAge(Date birthDay)  {
+        Calendar cal = Calendar.getInstance();
+
+        if (cal.before(birthDay)) {
+            throw new IllegalArgumentException(
+                "The birthDay is before Now.It's unbelievable!");
+        }
+
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH);
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+        cal.setTime(birthDay);
+
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+
+        int age = yearNow - yearBirth;
+
+        if (monthNow <= monthBirth) {
+            if (monthNow == monthBirth) {
+                //monthNow==monthBirth
+                if (dayOfMonthNow < dayOfMonthBirth) {
+                    age--;
+                } 
+            } else {
+                //monthNow>monthBirth
+                age--;
+            }
+        } 
+
+        return age;
+    }
+	
+	public static void main(String[] args) throws Exception{
+		
+		int age = getAge(new SimpleDateFormat("yyyy-MM-dd").parse("2012-04-07"));
+		System.out.println(age);
+		
 		String pattern = "yyyy-MM-dd HH:mm:ss";
 		Date today = new Date();
 		System.out.println("今天所在周次：" + getWeek(today));
