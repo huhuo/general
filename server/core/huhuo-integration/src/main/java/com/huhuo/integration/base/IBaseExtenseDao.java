@@ -31,6 +31,14 @@ public interface IBaseExtenseDao<T> extends IBaseDao<T>{
 	 */
 	<PK> T find(PK id);
 	/**
+	 * @see #queryForList(String, Class, Object...)
+	 */
+	List<T> findList(String sql, Object... args) throws DaoException;
+	/**
+	 * @see #queryForObject(String, Class, Object...)
+	 */
+	T findObject(String sql, Object... args) throws DaoException;
+	/**
 	 * get model by page, return all if start==null and limit==null
 	 * @param mappedClass
 	 * @param start
