@@ -13,7 +13,7 @@ import com.huhuo.integration.exception.DaoException;
 public interface IBaseDao<T> {
 
 	/**
-	 * insert a new record,  and auto assign the generated key value to id of @param t
+	 * insert a new record, and auto assign the generated key value to id of @param t
 	 * @param t
 	 * @return rows number affected
 	 * @throws DaoException
