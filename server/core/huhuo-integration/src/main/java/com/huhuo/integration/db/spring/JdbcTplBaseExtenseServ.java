@@ -77,6 +77,12 @@ public abstract class JdbcTplBaseExtenseServ<T> extends BaseServ implements IBas
 		return getDao().delete(t);
 	}
 	
+	
+	@Override
+	public <PK> Integer deleteBatch(List<PK> ids) throws DaoException {
+		return getDao().deleteBatch(ids);
+	}
+
 	@Override
 	public Integer deletePhysical(T t) throws DaoException {
 		return getDao().deletePhysical(t);

@@ -252,12 +252,41 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	}
 	
 	@Override
+	public <PK> Integer deleteBatch(List<PK> ids) throws DaoException {
+		if(ids == null || ids.isEmpty()) {
+			return null;
+		}
+		List<String> placeHolders = new ArrayList<String>();
+		for(int i=0; i<ids.size(); i++) {
+			placeHolders.add("?");
+		}
+		String sql = String.format("UPDATE %s SET status=0 WHERE id IN(%s)", getTableName(), 
+				StringUtils.join(placeHolders, separator));
+		return update(sql, ids.toArray());
+	}
+	
+	@Override
 	public Integer deletePhysical(T t) throws DaoException {
 		if(t == null) {
 			return null;
 		}
 		return deleteById(t.getId());
 	}
+	
+	@Override
+	public <PK> Integer deletePhysicalBatch(List<PK> ids) throws DaoException {
+		if(ids == null || ids.isEmpty()) {
+			return null;
+		}
+		List<String> placeHolders = new ArrayList<String>();
+		for(int i=0; i<ids.size(); i++) {
+			placeHolders.add("?");
+		}
+		String sql = String.format("DELETE FROM %s WHERE id IN(%s)", getTableName(), 
+				StringUtils.join(placeHolders, separator));
+		return update(sql, ids.toArray());
+	}
+	
 	@Override
 	public <PK> Integer deleteById(PK id) throws DaoException {
 		String sql = String.format("DELETE FROM %s WHERE id=?", getTableName());

@@ -1,5 +1,7 @@
 package com.huhuo.integration.base;
 
+import java.util.List;
+
 import com.huhuo.integration.exception.DaoException;
 
 public interface IBaseServ <T> {
@@ -24,6 +26,11 @@ public interface IBaseServ <T> {
 	 * @throws DaoException
 	 */
 	Integer delete(T t) throws DaoException;
+	/**
+	 * delete records logically by batch
+	 * @see #delete(Object)
+	 */
+	<PK> Integer deleteBatch(List<PK> ids) throws DaoException;
 	/**
 	 * delete model by id, physical delete
 	 * @param t

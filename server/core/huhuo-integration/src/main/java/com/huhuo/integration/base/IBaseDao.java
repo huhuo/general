@@ -40,12 +40,22 @@ public interface IBaseDao<T> {
 	 */
 	Integer delete(T t) throws DaoException;
 	/**
+	 * delete records logically by batch
+	 * @see #delete(Object)
+	 */
+	<PK> Integer deleteBatch(List<PK> ids) throws DaoException;
+	/**
 	 * delete model by id, physical delete
 	 * @param t
 	 * @return
 	 * @throws DaoException
 	 */
 	Integer deletePhysical(T t) throws DaoException;
+	/**
+	 * delete records physically by batch
+	 * @see #deletePhysical(Object)
+	 */
+	<PK> Integer deletePhysicalBatch(List<PK> ids) throws DaoException;
 	/**
 	 * delete model by id
 	 * @param id
