@@ -360,6 +360,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	public T findObject(String sql, Object... args) throws DaoException {
 		return queryForObject(sql, getModelClazz(), args);
 	}
+	
 	@Override
 	public <PK> T find(Class<T> clazz, PK id)
 			throws DaoException {

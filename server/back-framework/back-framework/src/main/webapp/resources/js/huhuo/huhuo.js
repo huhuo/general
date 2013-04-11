@@ -275,4 +275,80 @@
 			return false;
 		}
 	};
+	//自动填充
+	/**
+	 * url 访问地址
+	 * paramKey，输入框内容对应的变量
+	 * addOrderform 回填数据的表单
+	 * params 访问的其他参数集合
+	 * inputNamePre 在回填的时候，在同一表单中的不同对象可能会冲突，比如用户和车型都有name属性，就把input的name命名区分，比如，consumer.name,cartype.name, 在回填属性的时候，可以传入对应的前缀，比如consumer。
+	 * callback 回调函数
+	 */
+	$.fn.autoFill = function(url,paramKey,addOrderform,params,inputNamePre,dataprocess,callback){
+		if(inputNamePre==null){
+			inputNamePre="";
+		}else{
+			inputNamePre=inputNamePre+".";
+		}
+		
+		$(this).typeahead({
+			source: function (query, process) {
+				var params_=$.extend({},params);
+				params_[""+paramKey]=query;
+				
+				consumers = [];
+				consumermap = {};
+			    var records;
+			    $.post(url,params_,function(data,status){
+			    	
+			    	records=data.records;
+			    	
+				    $.each(records, function (i, consumer) {
+				    	if(dataprocess==null){
+				    		
+				    		consumermap[consumer[""+paramKey]] = consumer;
+				    		consumers.push(consumer[""+paramKey]);
+				    	}else{
+				    		dataprocess(consumer,consumermap,consumers);
+				    	}
+				    });
+				 
+				    process(consumers);
+			    });
+			    
+			 
+			},
+			updater: function (item) {
+			    var consumer = consumermap[item];
+			    console.info(consumer.mobileNumber);
+			    $.each(consumer, function (key, value) {
+			    	var inputlist=addOrderform.find("[name='"+inputNamePre+key+"']");
+			    	var input=inputlist.first();
+			    	
+			    	//單選框
+			    	if(input.attr('type')=='radio'){
+			    		addOrderform.find("[name='"+inputNamePre+key+"'][value="+value+"]").first()[0].checked=true;
+			    			
+			    	//下拉	
+			    	}else if (input.is('select')){
+			    		input.find('[value='+value+']')[0].selected=true;
+			    	}
+			    	//普通input
+			    	else{
+			    		input.attr("value",value);
+			    	}
+			    	
+			    });
+			    
+			    if(callback!=null){
+			    	callback(item);
+			    }
+			    
+			    return item;
+			},
+			minLength:0
+		
+		});
+	};
+	
 })(jQuery);
