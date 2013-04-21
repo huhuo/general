@@ -275,6 +275,37 @@
 			return false;
 		}
 	};
+	
+	$.extend({
+		setFormValue:setFormValue
+		
+	});
+	
+	function setFormValue(consumer,addOrderform,inputNamePre){
+		if(inputNamePre==null){
+			inputNamePre="";
+		}else{
+			inputNamePre=inputNamePre+".";
+		}
+		 $.each(consumer, function (key, value) {
+		    	var inputlist=addOrderform.find("[name='"+inputNamePre+key+"']");
+		    	var input=inputlist.first();
+		    	
+		    	//單選框
+		    	if(input.attr('type')=='radio'){
+		    		addOrderform.find("[name='"+inputNamePre+key+"'][value="+value+"]").first()[0].checked=true;
+		    			
+		    	//下拉	
+		    	}else if (input.is('select')){
+		    		input.find('[value='+value+']')[0].selected=true;
+		    	}
+		    	//普通input
+		    	else{
+		    		input.attr("value",value);
+		    	}
+		    	
+		    });
+	};
 	//自动填充
 	/**
 	 * url 访问地址
@@ -285,17 +316,13 @@
 	 * callback 回调函数
 	 */
 	$.fn.autoFill = function(url,paramKey,addOrderform,params,inputNamePre,dataprocess,callback){
-		if(inputNamePre==null){
-			inputNamePre="";
-		}else{
-			inputNamePre=inputNamePre+".";
-		}
-		
 		$(this).typeahead({
 			source: function (query, process) {
-				var params_=$.extend({},params);
+				var params_={};
 				params_[""+paramKey]=query;
-				
+				if(params!=null){
+					params_=params(params_);
+				}
 				consumers = [];
 				consumermap = {};
 			    var records;
@@ -320,28 +347,10 @@
 			},
 			updater: function (item) {
 			    var consumer = consumermap[item];
-			    console.info(consumer.mobileNumber);
-			    $.each(consumer, function (key, value) {
-			    	var inputlist=addOrderform.find("[name='"+inputNamePre+key+"']");
-			    	var input=inputlist.first();
-			    	
-			    	//單選框
-			    	if(input.attr('type')=='radio'){
-			    		addOrderform.find("[name='"+inputNamePre+key+"'][value="+value+"]").first()[0].checked=true;
-			    			
-			    	//下拉	
-			    	}else if (input.is('select')){
-			    		input.find('[value='+value+']')[0].selected=true;
-			    	}
-			    	//普通input
-			    	else{
-			    		input.attr("value",value);
-			    	}
-			    	
-			    });
+			    setFormValue(consumer,addOrderform,inputNamePre);
 			    
 			    if(callback!=null){
-			    	callback(item);
+			    	callback(consumer);
 			    }
 			    
 			    return item;
