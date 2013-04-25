@@ -327,20 +327,25 @@
 				consumermap = {};
 			    var records;
 			    $.post(url,params_,function(data,status){
-			    	
-			    	records=data.records;
-			    	
-				    $.each(records, function (i, consumer) {
-				    	if(dataprocess==null){
-				    		
-				    		consumermap[consumer[""+paramKey]] = consumer;
-				    		consumers.push(consumer[""+paramKey]);
-				    	}else{
-				    		dataprocess(consumer,consumermap,consumers);
-				    	}
-				    });
-				 
-				    process(consumers);
+			    	if (status == 'success') {
+			    		
+			    		
+			    		records=data.records;
+			    		
+			    		$.each(records, function (i, consumer) {
+			    			if(dataprocess==null){
+			    				
+			    				consumermap[consumer[""+paramKey]] = consumer;
+			    				consumers.push(consumer[""+paramKey]);
+			    			}else{
+			    				dataprocess(consumer,consumermap,consumers);
+			    			}
+			    		});
+			    		
+			    		process(consumers);
+			    	}else{
+			    		$.huhuoGrowlUI(data);
+			    	}
 			    });
 			    
 			 
