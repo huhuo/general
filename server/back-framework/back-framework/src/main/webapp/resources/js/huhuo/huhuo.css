@@ -75,3 +75,15 @@ body, input, button, select, textarea {
     color: #ffffff;
     text-decoration: none;
 }
+/**
+  progress CSS setting
+ */
+.progress {
+	position:relative;
+}
+.percent {
+	position:absolute;
+	display:inline-block;
+	left:48%;
+	color: white;
+}

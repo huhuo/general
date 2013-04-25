@@ -12,9 +12,6 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- File upload view resolver -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-	
 	<!-- Register the welcome.properties -->
 	<!-- <beans:bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -23,6 +20,7 @@
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/res/**" location="/resources/" />
+	<resources mapping="/file/**" location="/file/" />
 
 	<!-- excel bean view resolve -->
 	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">

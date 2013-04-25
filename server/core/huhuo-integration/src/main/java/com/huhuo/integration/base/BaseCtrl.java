@@ -50,7 +50,9 @@ public class BaseCtrl {
 		} else {
 			b = param.toByteArray();
 		}
-		return new String(b, encoding);
+		String paramPost = new String(b, encoding);
+		logger.info("==> received param --> {}", paramPost);
+		return paramPost;
 	}
 	
 	public String parseReqParam(InputStream in) throws IOException{
@@ -71,7 +73,7 @@ public class BaseCtrl {
 	}
 	
 	protected void write(Object obj, HttpServletResponse resp) {
-		write(obj, resp, false, false);
+		write(obj, resp, false);
 	}
 	
 	protected void write(Object obj, HttpServletResponse resp, boolean encrypted) {
@@ -96,9 +98,9 @@ public class BaseCtrl {
 			} else {
 				content = JSONObject.toJSONStringWithDateFormat(obj, dateFormat);
 			}
+			logger.info("==> return message --> {}", content);
 			byte[] response;
 			response = content.getBytes(encoding);
-
 			if (compressed) {
 				response = GzipUtils.compress(response);
 			}
