@@ -2,7 +2,7 @@ package com.huhuo.integration.service;
 
 import net.rubyeye.xmemcached.MemcachedClient;
 
-public interface MemcachedServ {
+public interface IServMemcached {
 
 	/**
 	 * key不压缩

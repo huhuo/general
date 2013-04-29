@@ -6,7 +6,7 @@ import net.rubyeye.xmemcached.MemcachedClient;
 
 import com.huhuo.integration.algorithm.MD5Utils;
 
-public class MemcachedServImpl implements MemcachedServ {
+public class ServMemcached implements IServMemcached {
 	private MemcachedClient memcachedClient;
 	private boolean isOn = true;
 	private int defaultExpiration = 24*60*60;

@@ -42,7 +42,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<bean name="memcachedClient" factory-bean="memcachedClientBuilder"
 		factory-method="build" destroy-method="shutdown" />
 
-	<bean id="memcachedService" class="com.huhuo.integration.service.MemcachedServImpl">
+	<bean id="memcachedService" class="com.huhuo.integration.service.ServMemcached">
 		<property name="isOn" value="#{memProps['memcached.on']}"/>
 		<property name="memcachedClient" ref="memcachedClient"/>
 		<!-- 

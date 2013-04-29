@@ -19,6 +19,4 @@
 		</property>
 	</bean>
 	
-	<import resource="app-context-util.xml"/>
-	<import resource="app-context-memcached.xml"/>
 </beans>

@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.huhuo</groupId>
+	<artifactId>huhuo-component-web</artifactId>
+	<version>1.0.0</version>
+	<name>huhuo-component-web</name>
+	<description>common components(memcached, http client, etc) support for huhuo corp</description>
+
+	<properties>
+		<java-version>1.6</java-version>
+		<org.springframework-version>3.1.0.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.6.9</org.aspectj-version>
+		<org.slf4j-version>1.5.10</org.slf4j-version>
+		<org.junit-version>4.7</org.junit-version>
+		
+		<huhuo.integration-version>1.0.0</huhuo.integration-version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.huhuo</groupId>
+		    <artifactId>huhuo-integration</artifactId>
+		    <version>${huhuo.integration-version}</version>
+		</dependency>
+		<!-- test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

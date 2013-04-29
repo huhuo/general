@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- modify the location of log4j.xml -->
-	<bean id="log4jPropertyConfigurator" class="com.eray.integration.config.Log4jPropertyConfigurator">
+	<bean id="log4jPropertyConfigurator" class="com.huhuo.integration.config.Log4jPropertyConfigurator">
 		<property name="log4jConfigLocation" value="conf/log4j.xml"/>
 	</bean>
 	
@@ -12,7 +12,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<!-- <value>classpath:com/eray/integration/resources/system.properties</value> -->
+				<!-- <value>classpath:com/huhuo/integration/resources/system.properties</value> -->
 			</list>
 		</property> 
 	</bean>

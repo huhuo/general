@@ -34,15 +34,15 @@ import com.huhuo.integration.web.Message.Status;
  * @author wuyuxuan
  *
  */
-public class HttpClientServ {
+public class ServHttpClient implements IServHttpClient {
 	protected HttpClient httpClient;
-	private String defaultEncoding = GlobalConstant.Encoding.UTF8;
-	private static Logger logger = LoggerFactory.getLogger(HttpClientServ.class);
+	protected String defaultEncoding = GlobalConstant.Encoding.UTF8;
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/**
 	 * See {@link #HttpClientServ(HttpClientParams, HttpConnectionManager)}
 	 */
-	public HttpClientServ() {
+	public ServHttpClient() {
 		this((HttpClientParams)null, null);
 	}
 	
@@ -51,7 +51,7 @@ public class HttpClientServ {
 	 * 
 	 * @param params
 	 */
-	public HttpClientServ(Map<String, Object> params){
+	public ServHttpClient(Map<String, Object> params){
 		this(params, null);
 	}
 	
@@ -62,7 +62,7 @@ public class HttpClientServ {
 	 *            used to set parameters of HttpClientParams
 	 * @param httpConnectionManager
 	 */
-	public HttpClientServ(Map<String, Object> params, HttpConnectionManager httpConnectionManager) {
+	public ServHttpClient(Map<String, Object> params, HttpConnectionManager httpConnectionManager) {
 		this((HttpClientParams)null, httpConnectionManager);
 		Iterator<String> it = params.keySet().iterator();
 		while(it.hasNext()){
@@ -76,7 +76,7 @@ public class HttpClientServ {
 	 * 
 	 * @param params
 	 */
-	public HttpClientServ(HttpClientParams params){
+	public ServHttpClient(HttpClientParams params){
 		this(params, null);
 	}
 	
@@ -86,7 +86,7 @@ public class HttpClientServ {
 	 * @param params
 	 * @param httpConnectionManager
 	 */
-	public HttpClientServ(HttpClientParams params, HttpConnectionManager httpConnectionManager){
+	public ServHttpClient(HttpClientParams params, HttpConnectionManager httpConnectionManager){
 		if(params==null && httpConnectionManager==null){
 			httpClient = new HttpClient();
 		}else if(params==null){
@@ -103,7 +103,7 @@ public class HttpClientServ {
 	 * 
 	 * @param httpConnectionManager
 	 */
-	public HttpClientServ(HttpConnectionManager httpConnectionManager){
+	public ServHttpClient(HttpConnectionManager httpConnectionManager){
 		this((HttpClientParams)null, httpConnectionManager);
 	}
 	
@@ -154,7 +154,7 @@ public class HttpClientServ {
 	 *            request. isForceCloseConnection is true, together with
 	 *            http.protocol.expect-continue is false, can solve problem
 	 *            about 'Too many open files' in linux when create many
-	 *            {@link HttpClientServ} instance. <br>false: the connection is
+	 *            {@link ServHttpClient} instance. <br>false: the connection is
 	 *            managed by HttpConnectionManager, not ensure it is closed.
 	 * 
 	 * @return {@link Message} object

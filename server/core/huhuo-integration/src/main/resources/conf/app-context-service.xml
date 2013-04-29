@@ -18,7 +18,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="maxTotalConnections" value="512"/>
 	</bean>
 
-	<bean id="huhuointegrationHttpClientServ" class="com.huhuo.integration.service.HttpClientServ" scope="prototype">
+	<bean id="huhuointegrationHttpClientServ" class="com.huhuo.integration.service.ServHttpClient" scope="prototype">
 		<constructor-arg type="java.util.Map">
 			<map>
 				<entry key="http.protocol.expect-continue"><value type="java.lang.Boolean">false</value></entry> <!-- solve too many open files -->

@@ -14,7 +14,7 @@ import com.huhuo.integration.config.GlobalConstant;
 @ContextConfiguration(locations="classpath:conf/app-context-service.xml")
 public class HttpClientServTest extends HuhuoIntegrationTest {
 	@Resource(name="huhuointegrationHttpClientServ")
-	private HttpClientServ httpClientServ;
+	private ServHttpClient httpClientServ;
 	String url = "http://localhost:8080/back-framework/cmcar/car/";
 	@Test
 	public void printServ() {

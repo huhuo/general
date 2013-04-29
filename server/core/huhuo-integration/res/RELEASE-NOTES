@@ -1,7 +1,7 @@
 ================================================================================
- eray-integration
+ huhuo-integration
 ================================================================================
-                    Eray Mobile Version 1.0.0
+                    huhuo Mobile Version 1.0.0
                             Release Notes
 
 
@@ -9,17 +9,17 @@
 Version 1.0.0
 ===============
 > 包说明
-	com.eray.integration.algorithm
+	com.huhuo.integration.algorithm
 		编码、加密等算法
-	com.eray.integration.base
+	com.huhuo.integration.base
 		基础接口或类库
-	com.eray.integration.config
+	com.huhuo.integration.config
 		配置
-	com.eray.integration.exception
+	com.huhuo.integration.exception
 		异常
-	com.eray.integration.service
+	com.huhuo.integration.service
 		服务组件
-	com.eray.integration.util
+	com.huhuo.integration.util
 		工具
 
 

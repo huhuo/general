@@ -11,7 +11,7 @@ import com.huhuo.integration.HuhuoIntegrationTest;
 public class MemcachedServTest extends HuhuoIntegrationTest {
 	
 	@Resource(name = "memcachedService")
-	private MemcachedServ memServ;
+	private IServMemcached memServ;
 	String region = "region1";
 	String key = "key1";
 	String value = "hello1";

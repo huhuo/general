@@ -9,15 +9,15 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	<!--
 	=================
-	ErayEncryptUtil
+	HuhuoEncryptUtil
 	=================
 	-->
 	<bean id= "huhuoEncryptUtilSetKeyInjector" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-             <property name = "staticMethod" value="com.huhuo.integration.algorithm.HuhuoEncryptUtil.setKey"/>
+             <property name = "staticMethod" value="com.huhuo.integration.algorithm.HuhuoEncryptUtils.setKey"/>
              <property name = "arguments" value="#{utilProps['huhuo.encryptkey']}"/>
     </bean>
 	<bean id= "huhuoEncryptUtilsetEncodingInjector" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-             <property name = "staticMethod" value="com.eray.integration.algorithm.HuhuoEncryptUtil.setEncoding"/>
+             <property name = "staticMethod" value="com.huhuo.integration.algorithm.HuhuoEncryptUtils.setEncoding"/>
              <property name = "arguments" value="#{utilProps['huhuo.encoding']}"/>
     </bean>
 
