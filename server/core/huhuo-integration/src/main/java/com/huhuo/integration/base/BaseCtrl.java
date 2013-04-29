@@ -98,7 +98,7 @@ public class BaseCtrl {
 			} else {
 				content = JSONObject.toJSONStringWithDateFormat(obj, dateFormat);
 			}
-			logger.info("==> return message --> {}", content);
+			logger.info("==> write out result --> {}", content);
 			byte[] response;
 			response = content.getBytes(encoding);
 			if (compressed) {
