@@ -325,10 +325,17 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Override
 	public <E> List<E> queryForList(String sql, Class<E> clazz, Object... args)
 			throws DaoException {
-		logger.debug("==> SQL --> {}", sql);
-		logger.debug("==> params --> {}", prettyFormat(args));
-		List<E> rs = getJdbcTemplate().query(sql, args, new BeanPropertyRowMapper<E>(clazz));
-		logger.debug("<== result set <-- {}", prettyFormat(rs));
+		List<E> rs=null;
+		try {
+			logger.debug("==> SQL --> {}", sql);
+			logger.debug("==> params --> {}", prettyFormat(args));
+			rs = getJdbcTemplate().query(sql, args, new BeanPropertyRowMapper<E>(clazz));
+			logger.debug("<== result set <-- {}", prettyFormat(rs));
+		} catch(DaoException de){
+			throw de;
+		}catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
 		return rs;
 	}
 	
