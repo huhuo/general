@@ -5,45 +5,14 @@ import java.util.Map;
 
 import com.huhuo.integration.exception.DaoException;
 
+
 /**
  * basic operation for DB
  *@author wuyuxuan
  * @param <T>
  */
-public interface IBaseDao<T> {
+public interface IBaseDao<T> extends IBaseDB<T> {
 
-	/**
-	 * insert a new record, and auto assign the generated key value to id of @param t
-	 * @param t
-	 * @return rows number affected
-	 * @throws DaoException
-	 */
-	Integer add(T t) throws DaoException;
-	/**
-	 * update model t by id
-	 * @param t
-	 * @return null if t==null, else the generated key value
-	 * @throws DaoException
-	 */
-	Integer update(T t) throws DaoException;
-	/**
-	 * persist T's instance of this interface by it's primary key id, if not exist in DB, then add a new record
-	 * @param t
-	 * @throws DaoException 
-	 */
-	boolean save(T t) throws DaoException;
-	/**
-	 * delete a record logically, just setting status field in t to be 0
-	 * @param t
-	 * @return if t==null return null, else the total number of affected row
-	 * @throws DaoException
-	 */
-	Integer delete(T t) throws DaoException;
-	/**
-	 * delete records logically by batch
-	 * @see #delete(Object)
-	 */
-	<PK> Integer deleteBatch(List<PK> ids) throws DaoException;
 	/**
 	 * delete model by id, physical delete
 	 * @param t
@@ -113,20 +82,17 @@ public interface IBaseDao<T> {
 	 */
 	<E> E queryForObject(String sql, Class<E> clazz, Object... args) throws DaoException;
 	/**
-	 * get the total number
-	 * @return
-	 */
-	Long count();
-	/**
-	 * Issue a single SQL update operation (such as an insert, update or delete statement)
-	 * via a prepared statement, binding the given arguments.
-	 * @param sql SQL containing bind parameters
+	 * Query given SQL to create a prepared statement from SQL and a
+	 * list of arguments to bind to the query, expecting a result object.
+	 * <p>The query is expected to be a single row/single column query; the returned
+	 * result will be directly mapped to the corresponding object type.
+	 * @param sql SQL query to execute
+	 * @param requiredType the type that the result object is expected to match
 	 * @param args arguments to bind to the query
-	 * (leaving it to the PreparedStatement to guess the corresponding SQL type);
-	 * @return the number of rows affected
-	 * @throws DaoException if there is any problem issuing the update
+	 * @return the result object of the required type, or <code>null</code> in case of SQL NULL
+	 * @throws DaoException
 	 */
-	int update(String sql, Object... args) throws DaoException;
+	<E> E queryForSingleColVal(String sql, Class<E> requiredType, Object... args) throws DaoException;
 	/**
 	 * Issue multiple SQL updates on a single JDBC Statement using batching.
 	 * <p>Will fall back to separate updates on a single Statement if the JDBC
@@ -142,4 +108,14 @@ public interface IBaseDao<T> {
 	 * @throws DaoException if there is any problem
 	 */
 	void execute(String sql) throws DaoException;
+	/**
+	 * Issue a single SQL update operation (such as an insert, update or delete statement)
+	 * via a prepared statement, binding the given arguments.
+	 * @param sql SQL containing bind parameters
+	 * @param args arguments to bind to the query
+	 * (leaving it to the PreparedStatement to guess the corresponding SQL type);
+	 * @return the number of rows affected
+	 * @throws DaoException if there is any problem issuing the update
+	 */
+	int update(String sql, Object... args) throws DaoException;
 }
