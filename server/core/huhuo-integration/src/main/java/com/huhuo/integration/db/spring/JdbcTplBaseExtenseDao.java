@@ -77,7 +77,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	}
 	
 	@Override
-	public boolean save(T t) throws DaoException {
+	public Boolean save(T t) throws DaoException {
 		if(t == null)
 			throw new DaoException("==> model t can't be null");
 		if(update(t) < 1) {
@@ -133,7 +133,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		Number id = insert.executeAndReturnKey(args);
 		logger.debug("==> SQL --> {}", insert.getInsertString());
 		logger.debug("==> params --> {}", prettyFormat(values));
-		logger.debug("==> primary key return --> {}", id);
+		logger.debug("<== primary key return <-- {}", id);
 		if(id instanceof Long)
 			t.setId((Long) id);
 		return 1;
@@ -179,7 +179,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sb.toString());
 		logger.debug("==> params --> {}", prettyFormat(values));
 		int update = getJdbcTemplate().update(sb.toString(), objects);
-		logger.debug("==> row affected --> {}", update);
+		logger.debug("<== row affected <-- {}", update);
 		return update;
 		
 	}
@@ -194,7 +194,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 			batch[i] = new BeanPropertySqlParameterSource(list.get(i));
 		}
 		int[] executeBatch = jdbcInsert.executeBatch(batch);
-		logger.debug("==> addBatch end with affected row --> {}", executeBatch);
+		logger.debug("<== addBatch end with affected row <-- {}", executeBatch);
 		return executeBatch;
 	}
 
@@ -234,7 +234,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 //		logger.debug("==> params --> {}", StringUtils.join(objects, separator));
 		logger.debug("==> params --> {}", prettyFormat(values));
 		int update = getJdbcTemplate().update(sb.toString(), objects);
-		logger.debug("==> row affected --> {}", update);
+		logger.debug("<== row affected <-- {}", update);
 		return update;
 	}
 
@@ -247,7 +247,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", t.getId());
 		int update = getJdbcTemplate().update(sql, t.getId());
-		logger.debug("==> row affected --> {}", update);
+		logger.debug("<== row affected <-- {}", update);
 		return update;
 	}
 	
@@ -293,7 +293,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", id);
 		Integer update = getJdbcTemplate().update(sql, id);
-		logger.debug("==> row affected --> {}", update);
+		logger.debug("<== row affected <-- {}", update);
 		return update;
 	}
 	
@@ -302,7 +302,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		String sql = String.format("SELECT COUNT(*) FROM %s", getTableName());
 		logger.debug("==> SQL --> {}", sql);
 		long count = getJdbcTemplate().queryForLong(sql);
-		logger.debug("==> result count --> {}", count);
+		logger.debug("<== result count <-- {}", count);
 		return count;
 	}
 	@Override
@@ -311,7 +311,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", prettyFormat(args));
 		List<Map<String, Object>> rs = getJdbcTemplate().queryForList(sql, args);
-		logger.debug("==> result set --> {}", prettyFormat(rs));
+		logger.debug("<== result set <-- {}", prettyFormat(rs));
 		return rs;
 	}
 	@Override
@@ -319,20 +319,16 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", prettyFormat(args));
 		Map<String, Object> rs = getJdbcTemplate().queryForMap(sql, args);
-		logger.debug("==> result set --> {}", prettyFormat(rs));
+		logger.debug("<== result set <-- {}", prettyFormat(rs));
 		return rs;
 	}
 	@Override
 	public <E> List<E> queryForList(String sql, Class<E> clazz, Object... args)
 			throws DaoException {
-		List<E> rs = getJdbcTemplate().query(sql, args, new BeanPropertyRowMapper<E>(clazz));
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", prettyFormat(args));
-		if(rs == null) {
-			logger.debug("==> result set --> {}", rs);
-		} else {
-			logger.debug("==> result set --> {}", prettyFormat(rs));
-		}
+		List<E> rs = getJdbcTemplate().query(sql, args, new BeanPropertyRowMapper<E>(clazz));
+		logger.debug("<== result set <-- {}", prettyFormat(rs));
 		return rs;
 	}
 	
@@ -343,14 +339,24 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 			logger.debug("==> SQL --> {}", sql);
 			logger.debug("==> params --> {}", prettyFormat(args));
 			E singleResult = getJdbcTemplate().queryForObject(sql, BeanPropertyRowMapper.newInstance(clazz), args);
-			logger.debug("==> result set -->{}", prettyFormat(singleResult));
+			logger.debug("<== result set <-- {}", prettyFormat(singleResult));
 			return singleResult;
 		} catch (EmptyResultDataAccessException e) {
-			logger.warn("==> error cause by --> {}", e.getMessage());
+			logger.warn("<== error cause by <-- {}", e.getMessage());
 			return null;
 		}
 	}
 	
+	@Override
+	public <E> E queryForSingleColVal(String sql, Class<E> requiredType,
+			Object... args) throws DaoException {
+		// TODO Auto-generated method stub
+		logger.debug("==> SQL --> {}", sql);
+		logger.debug("==> params --> {}", prettyFormat(args));
+		E singleResult = getJdbcTemplate().queryForObject(sql, args, requiredType);
+		logger.debug("<== result set <-- {}", prettyFormat(singleResult));
+		return singleResult;
+	}
 	@Override
 	public List<T> findList(String sql, Object... args) throws DaoException {
 		return queryForList(sql, getModelClazz(), args);
@@ -502,7 +508,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 			logger.debug("==> SQL --> {}", sb.toString());
 			logger.debug("==> params --> {}", StringUtils.join(values, separator));
 			long ret = getJdbcTemplate().queryForLong(sb.toString(), values.toArray());
-			logger.debug("==> result set -->{}", ret);
+			logger.debug("<== result set <-- {}", ret);
 			return ret;
 		} catch (Exception e) {
 			throw new DaoException(e);
@@ -513,7 +519,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", prettyFormat(args));
 		int update = getJdbcTemplate().update(sql, args);
-		logger.debug("==> rows affected -->{}", update);
+		logger.debug("<== rows affected <-- {}", update);
 		return update;
 	}
 	@Override
@@ -521,7 +527,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", prettyFormat(sql));
 		logger.debug("==> params --> {}", "empty");
 		int[] batchUpdate = getJdbcTemplate().batchUpdate(sql);
-		logger.debug("==> batchUpdate resultset -->{}", batchUpdate);
+		logger.debug("<== batchUpdate resultset <-- {}", batchUpdate);
 		return batchUpdate;
 	}
 	@Override
@@ -529,7 +535,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.debug("==> SQL --> {}", sql);
 		logger.debug("==> params --> {}", "empty");
 		getJdbcTemplate().execute(sql);
-		logger.debug("==> execute success!");
+		logger.debug("<== execute success!");
 	}
 	/**
 	 * format obj to JSON format

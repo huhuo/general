@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.huhuo.integration.exception.DaoException;
 
-public interface IBaseServ <T> {
+public interface IBaseServ <T> extends IBaseDB<T> {
 	
 	/**
 	 * persist a new record to DB
