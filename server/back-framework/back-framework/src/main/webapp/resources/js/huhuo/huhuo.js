@@ -216,7 +216,6 @@
 		form.submit(function() {
 			if (form.valid()) {
 				$.post(action, form.serialize(), function(data, status) {
-					$.huhuoGrowlUI("hahaha");
 					if(callback!=null){
 						callback(data, status);
 					}
@@ -334,7 +333,6 @@
 			    		
 			    		$.each(records, function (i, consumer) {
 			    			if(dataprocess==null){
-			    				
 			    				consumermap[consumer[""+paramKey]] = consumer;
 			    				consumers.push(consumer[""+paramKey]);
 			    			}else{
@@ -344,7 +342,7 @@
 			    		
 			    		process(consumers);
 			    	}else{
-			    		$.huhuoGrowlUI(data);
+			    		$.huhuoGrowlUI("系统错误");
 			    	}
 			    });
 			    
