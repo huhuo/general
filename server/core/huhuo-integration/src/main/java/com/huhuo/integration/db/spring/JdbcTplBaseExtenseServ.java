@@ -59,6 +59,9 @@ public abstract class JdbcTplBaseExtenseServ<T extends IBaseModel<Long>> extends
 
 	@Override
 	public Integer update(T t) {
+		if(t == null)
+			return null;
+		t = setDefaultValue(t);
 		return getDao().update(t);
 	}
 

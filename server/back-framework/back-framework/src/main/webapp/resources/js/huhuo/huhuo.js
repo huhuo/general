@@ -385,4 +385,91 @@
 		return format;
 	};
 	
+	/**
+	 * upload cached file
+	 * @param callBack: call back function after file upload complete
+	 * @param barDiv: process bar div to render, required
+	 * @param percentDiv: percent div to render, required
+	 * @param beforeSubmit: orginal function supplied by jquery.form.js
+	 * @param beforeSend: orginal function supplied by jquery.form.js
+	 * @param uploadProgress: orginal function supplied by jquery.form.js
+	 * @param success: orginal function supplied by jquery.form.js
+	 * @param complete: orginal function supplied by jquery.form.js
+	 */
+	$.fn.fileUpload = function(callBack, barDiv, percentDiv, beforeSubmit, beforeSend, 
+			uploadProgress, success, complete) {
+		// reset file uplod form
+		var fileUploadForm = $(this);
+		fileUploadForm.attr('action', 'cmsystem/file/fileupload/cached.do');
+		fileUploadForm.attr('method', 'post');
+		fileUploadForm.attr('enctype', 'multipart/form-data');
+		var imgDiv = fileUploadForm.find('img');
+		if(imgDiv) {
+			if(imgDiv.attr('style') == null) {
+				imgDiv.attr('style', 'width: 450px; height: 300px;');
+			}
+		}
+		if(barDiv == null) {
+			barDiv = fileUploadForm.find('.progress .bar');
+		}
+		if(percentDiv == null) {
+			percentDiv = fileUploadForm.find('.progress .percent');
+		}
+		// configure option for ajaxForm
+		var option = {};
+		if(beforeSubmit == null) {
+			option.beforeSubmit = function(file, form, option) {
+				if(file[0].value == '') {
+					alert('请先选择要上传的图片');
+					return false;
+				}
+			};
+		} else {
+			option.beforeSubmit = beforeSubmit;
+		}
+		if(beforeSend == null) {
+			option.beforeSend = function(s, xhr) {
+				var percentVal = '0%';
+				barDiv.width(percentVal);
+				percentDiv.html(percentVal);
+			};
+		} else {
+			option.beforeSend = beforeSend;
+		}
+		if(uploadProgress == null) {
+			option.uploadProgress = function(event, position, total, percentComplete) {
+				var percentVal = percentComplete + '%';
+				barDiv.width(percentVal);
+				percentDiv.html(percentVal);
+			};
+		} else {
+			option.uploadProgress = uploadProgress;
+		}
+		if(success == null) {
+			option.success = function(data, status, xhr) {
+				var percentVal = '100%';
+				barDiv.width(percentVal);
+				percentDiv.html(percentVal);
+				var file = data.data;
+				if(file) {
+					fileUploadForm.find('img').attr('src', file.path + '/' + file.md5);
+					// call back function invoked
+					callBack(data, status, xhr);
+				}
+				alert(data.msg);
+//				$.huhuoGrowlUI(data.msg);
+			};
+		} else {
+			option.success = function(data, status, xhr) {
+				// call back function invoked
+				callBack(data, status, xhr);
+			};
+		}
+		if(complete != null) {
+			option.complete = complete;
+		}
+		// invoke the jquery form
+		$('#fileUploadForm').ajaxForm(option);
+	};
+	
 })(jQuery);
