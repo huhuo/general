@@ -450,7 +450,7 @@
 				percentDiv.html(percentVal);
 				var file = data.data;
 				if(file) {
-					fileUploadForm.find('img').attr('src', file.path + '/' + file.md5);
+					fileUploadForm.find('img').attr('src', file.url);
 					// call back function invoked
 					callBack(data, status, xhr);
 				}
