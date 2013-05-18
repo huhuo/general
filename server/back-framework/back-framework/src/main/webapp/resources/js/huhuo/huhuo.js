@@ -305,6 +305,10 @@
 		    	
 		    });
 	};
+	
+	 function trim(str){ //删除左右两端的空格
+		 return str.replace(/(^\s*)|(\s*$)/g, "");
+	 }
 	//自动填充
 	/**
 	 * url 访问地址
@@ -318,7 +322,7 @@
 		$(this).typeahead({
 			source: function (query, process) {
 				var params_={};
-				params_[""+paramKey]=query;
+				params_[""+paramKey]=trim(query);
 				if(params!=null){
 					params_=params(params_);
 				}
@@ -450,7 +454,7 @@
 				percentDiv.html(percentVal);
 				var file = data.data;
 				if(file) {
-					fileUploadForm.find('img').attr('src', file.path + '/' + file.md5);
+					fileUploadForm.find('img').attr('src', file.url);
 					// call back function invoked
 					callBack(data, status, xhr);
 				}
