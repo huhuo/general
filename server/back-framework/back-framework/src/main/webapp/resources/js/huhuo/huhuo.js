@@ -320,7 +320,7 @@
 	 */
 	$.fn.autoFill = function(url,paramKey,addOrderform,params,inputNamePre,dataprocess,callback){
 		$(this).typeahead({
-			source: function (query, process) {
+			source: function (query, process) { 
 				var params_={};
 				params_[""+paramKey]=trim(query);
 				if(params!=null){
