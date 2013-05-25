@@ -20,7 +20,7 @@ public class HuhuoWebBaseBaseCtrl extends BaseCtrl {
 	 */
 	protected String render(Model model, Object obj) {
 		model.addAttribute(GeneralPage.MSG_PAGE.getAttrName(), obj);
-		logger.info("==> return message --> {}", obj);
+		logger.info("==> render result --> {}", obj);
 		return GeneralPage.MSG_PAGE.getLocation();
 	}
 	
