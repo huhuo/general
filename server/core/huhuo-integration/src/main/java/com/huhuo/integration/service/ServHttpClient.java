@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpConnectionManager;
@@ -359,6 +360,27 @@ public class ServHttpClient implements IServHttpClient {
 	public Message<String> postAsStream(String url, byte[] msg, boolean isForceCloseConnection, String respEncoding){
 		InputStreamRequestEntity reqEntity = new InputStreamRequestEntity(new ByteArrayInputStream(msg), msg.length);
 		PostMethod method = new PostMethod(url);
+		method.setRequestEntity(reqEntity);
+		return executeMethod(method, isForceCloseConnection, respEncoding);
+	}
+	
+	/**
+	 * See {@link #postAsStream(String, String, String, boolean, String)}.
+	 * 
+	 * @param url
+	 * @param msg
+	 * @param isForceCloseConnection
+	 * @param respEncoding
+	 * @return
+	 */
+	public Message<String> postAsStream(String url, byte[] msg, boolean isForceCloseConnection, String respEncoding,Header...headers ){
+		InputStreamRequestEntity reqEntity = new InputStreamRequestEntity(new ByteArrayInputStream(msg), msg.length);
+		PostMethod method = new PostMethod(url);
+		if(headers!=null&&headers.length>0){
+				for(Header header:headers){
+						method.setRequestHeader(header);
+				}
+		}
 		method.setRequestEntity(reqEntity);
 		return executeMethod(method, isForceCloseConnection, respEncoding);
 	}

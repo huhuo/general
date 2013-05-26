@@ -14,6 +14,7 @@ import org.apache.commons.codec.binary.Hex;
  */
 public class MD5Utils {
 	public static final String MD5 = "MD5"; 
+	
 	/**
 	 * 获取数据摘要信息
 	 * 

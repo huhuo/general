@@ -1,5 +1,6 @@
 package com.huhuo.integration.service;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.NameValuePair;
 
@@ -169,6 +170,17 @@ public interface IServHttpClient {
 	 * @return
 	 */
 	public Message<String> postAsStream(String url, String msg);
+	/**
+	 * See {@link #postAsStream(String, String, String, boolean, String)}.
+	 * 
+	 * @param url
+	 * @param msg
+	 * @param isForceCloseConnection
+	 * @param respEncoding
+	 * @return
+	 */
+	public Message<String> postAsStream(String url, byte[] msg, 
+			boolean isForceCloseConnection, String respEncoding,Header... headers);
 	/**
 	 * See {@link #postAsStream(String, String, String, boolean, String)}.
 	 * 
