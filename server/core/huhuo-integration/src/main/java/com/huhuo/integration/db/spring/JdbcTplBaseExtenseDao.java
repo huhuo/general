@@ -30,6 +30,7 @@ import com.huhuo.integration.db.mysql.Condition;
 import com.huhuo.integration.db.mysql.Group;
 import com.huhuo.integration.db.mysql.Order;
 import com.huhuo.integration.db.mysql.Page;
+import com.huhuo.integration.db.mysql.Where;
 import com.huhuo.integration.exception.DaoException;
 import com.huhuo.integration.util.StringUtils;
 
@@ -464,6 +465,20 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 						}
 					}
 				}
+			}
+		}
+		// additional where clause
+		List<Where> whereList = condition.getWhereList();
+		if(whereList!=null && !whereList.isEmpty()) {
+			boolean first = true;
+			for(Where where : whereList) {
+				if(first && !StringUtils.contains(sb.toString(), "WHERE")) {
+					sb.append(" WHERE (").append(where.getSql()).append(")");
+					first = false;
+				} else {
+					sb.append(" ").append(where.getJoin()).append(" (").append(where.getSql()).append(")");
+				}
+				values.addAll(where.getParams());
 			}
 		}
 		// group by clause
