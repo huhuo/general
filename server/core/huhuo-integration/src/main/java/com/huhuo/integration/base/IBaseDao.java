@@ -73,6 +73,21 @@ public interface IBaseDao<T> extends IBaseDB<T> {
 	 */
 	<E> List<E> queryForList(String sql, Class<E> clazz, Object... args) throws DaoException;
 	/**
+	 * Query given SQL to create a prepared statement from SQL and a list
+	 * of arguments to bind to the query, mapping each row to a Java object.<br>
+	 * call example:
+	 * queryForList("select * from meta_recommend_page_tbl where id in(:ids)",
+	 * ModelRecommendPage.class, Collections.singletonMap("ids",
+	 * Arrays.asList(new Long[]{1L,2L})))
+	 * 
+	 * @param sql
+	 * @param elementType
+	 * @param paramMap
+	 * @return the result List, containing the specified type
+	 * @throws DaoException
+	 */
+	<E> List<E> queryForList(String sql, Class<E> elementType, Map<String, ?> paramMap) throws DaoException;
+	/**
 	 * execute the sql, and retrieve an single object mapped by @param clazz
 	 * @param sql
 	 * @param clazz

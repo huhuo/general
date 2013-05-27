@@ -9,25 +9,17 @@ import com.alibaba.fastjson.JSONObject;
 
 public class Condition<T> {
 
-	/**
-	 * 查询实体
-	 */
+	/** query entity which field will be used to construct WHERE clause if it isn't null */
 	protected T t;
-	/**
-	 * 备用查询包装对象
-	 */
-	protected Map<String, Object> opt=new HashMap<String,Object>();
-	/**
-	 * 分页
-	 */
+	/** reserve object to construct complicated custom WHERE clause */
+	protected Map<String, Object> opt = new HashMap<String, Object>();
+	/** additional where clause **/
+	protected List<Where> whereList;
+	/** page object to construct LIMIT clause */
 	protected Page<T> page;
-	/**
-	 * 排序（多字段）
-	 */
+	/** ORDER clause */
 	protected List<Order> orderList;
-	/**
-	 * 分组
-	 */
+	/** GROUP clause */
 	protected List<Group> groupList;
 	
 	private String dateFormat = "yyyy-MM-dd HH:mm:ss";
@@ -58,6 +50,22 @@ public class Condition<T> {
 
 	public void setOpt(Map<String, Object> opt) {
 		this.opt = opt;
+	}
+
+	public List<Where> getWhereList() {
+		return whereList;
+	}
+
+	public void setWhereList(List<Where> whereList) {
+		this.whereList = whereList;
+	}
+	
+	public void setWhereList(Where... wheres) {
+		List<Where> list = new ArrayList<Where>();
+		for(Where where : wheres) {
+			list.add(where);
+		}
+		setWhereList(list);
 	}
 
 	public Page<T> getPage() {
