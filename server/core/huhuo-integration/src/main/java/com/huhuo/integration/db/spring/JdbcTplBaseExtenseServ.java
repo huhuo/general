@@ -1,5 +1,6 @@
 package com.huhuo.integration.db.spring;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,20 @@ public abstract class JdbcTplBaseExtenseServ<T extends IBaseModel<Long>> extends
 	 */
 	public abstract IBaseExtenseDao<T> getDao();
 	
-	public abstract Class<T> getModelClazz();
+	public abstract void inject(T t);
+	
+	public void inject(List<T> list){
+		if(list!=null){
+			for(T t: list){
+				inject(t);
+			}
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Class<T> getModelClazz(){
+		return (Class<T>) ((ParameterizedType)(getClass().getGenericSuperclass())).getActualTypeArguments()[0];
+	}
 	
 	/**
 	 * set default value for common field

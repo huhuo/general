@@ -1,6 +1,7 @@
 package com.huhuo.integration.base;
 
 import java.util.List;
+import java.util.Map;
 
 import com.huhuo.integration.db.mysql.Condition;
 import com.huhuo.integration.exception.DaoException;
@@ -31,9 +32,19 @@ public interface IBaseExtenseDao<T> extends IBaseDao<T>{
 	 */
 	<PK> T find(PK id);
 	/**
+	 * find model list by ids
+	 * @param ids
+	 * @return
+	 */
+	<PK> List<T> findByIds(List<PK> ids);
+	/**
 	 * @see #queryForList(String, Class, Object...)
 	 */
 	List<T> findList(String sql, Object... args) throws DaoException;
+	/**
+	 * @see #queryForList(String, Class, Map)
+	 */
+	List<T> findList(String sql, Map<String, ?> paramMap) throws DaoException;
 	/**
 	 * @see #queryForObject(String, Class, Object...)
 	 */

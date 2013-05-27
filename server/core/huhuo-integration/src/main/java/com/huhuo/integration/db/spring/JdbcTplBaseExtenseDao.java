@@ -3,6 +3,7 @@ package com.huhuo.integration.db.spring;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import com.alibaba.fastjson.JSON;
@@ -48,6 +51,10 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private String separator = ", ";
 	
+	protected JdbcTemplate jdbcTpl;
+	
+	protected NamedParameterJdbcOperations namedParamJdbcOp;
+	
 	/**
 	 * get table's in DB mapping this entity
 	 * @return
@@ -70,11 +77,25 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	}
 	
 	public final JdbcTemplate getJdbcTemplate() {
-		DataSource dataSource = getDataSource();
-		if(dataSource == null) {
-			throw new DaoException("==> spring bean 'dataSource' is required");
+		if(jdbcTpl == null) {
+			DataSource dataSource = getDataSource();
+			if(dataSource == null) {
+				throw new DaoException("==> spring bean 'dataSource' is required");
+			}
+			jdbcTpl = new JdbcTemplate(dataSource);
 		}
-		return new JdbcTemplate(dataSource);
+		return jdbcTpl;
+	}
+	
+	public final NamedParameterJdbcOperations getNamedParameterJdbcOperations(){
+		if(namedParamJdbcOp==null){
+			DataSource dataSource = getDataSource();
+			if(dataSource == null) {
+				throw new DaoException("==> spring bean 'dataSource' is required");
+			}
+			namedParamJdbcOp = new NamedParameterJdbcTemplate(dataSource);
+		}
+		return namedParamJdbcOp;
 	}
 	
 	@Override
@@ -369,6 +390,21 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	public List<T> findList(String sql, Object... args) throws DaoException {
 		return queryForList(sql, getModelClazz(), args);
 	}
+	@Override
+	public <E> List<E> queryForList(String sql, Class<E> clazz, Map<String, ?> paramMap){
+		logger.debug("==> SQL --> {}", sql);
+		logger.debug("==> params --> {}", paramMap);
+		
+		List<E> rs = getNamedParameterJdbcOperations().query(sql, paramMap, new BeanPropertyRowMapper<E>(clazz));
+		
+		logger.debug("==> result set --> {}", rs==null? rs: prettyFormat(rs));
+		
+		return rs;
+	}
+	@Override
+	public List<T> findList(String sql, Map<String, ?> paramMap) throws DaoException{
+		return queryForList(sql, getModelClazz(), paramMap);
+	}
 	
 	@Override
 	public T findObject(String sql, Object... args) throws DaoException {
@@ -386,7 +422,14 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	public <PK> T find(PK id) throws DaoException {
 		return find(getModelClazz(), id);
 	}
-
+	
+	@Override
+	public <PK> List<T> findByIds(List<PK> idList){
+		String sql = String.format("SELECT * FROM %s WHERE id IN(:ids)", getTableName());
+		return findList(sql, Collections.singletonMap("ids", idList));
+		
+	}
+	
 	@Override
 	public List<T> findModels(Class<T> clazz,
 			Integer start, Integer limit) throws DaoException {
