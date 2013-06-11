@@ -1,16 +1,21 @@
 package com.huhuo.integration.service;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.rubyeye.xmemcached.MemcachedClient;
 
 import com.huhuo.integration.algorithm.MD5Utils;
 
 public class ServMemcached implements IServMemcached {
-	private MemcachedClient memcachedClient;
-	private boolean isOn = true;
-	private int defaultExpiration = 24*60*60;
-	private long defaultTimeout = 60000;
+	
+	protected MemcachedClient memcachedClient;
+	protected boolean isOn = true;
+	protected int defaultExpiration = 24*60*60;
+	protected long defaultTimeout = 60000;
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	public String getFullKey(String region, String key){
 		StringBuffer keySb = new StringBuffer();
@@ -48,7 +53,10 @@ public class ServMemcached implements IServMemcached {
 				key = getCompressKey(key);
 			}
 			try {
-				return memcachedClient.get(getFullKey(region, key), timeout);
+				String fullKey = getFullKey(region, key);
+				T ret = memcachedClient.get(fullKey, timeout);
+				logger.info("==> get object with key={} --> value={}", fullKey, ret);
+				return memcachedClient.get(fullKey, timeout);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -79,7 +87,9 @@ public class ServMemcached implements IServMemcached {
 				key = getCompressKey(key);
 			}
 			try {
-				return memcachedClient.set(getFullKey(region, key), exp, value, timeout);
+				String fullKey = getFullKey(region, key);
+				logger.info("==> set object with key={} --> value={}", fullKey, value);
+				return memcachedClient.set(fullKey, exp, value, timeout);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -100,7 +110,9 @@ public class ServMemcached implements IServMemcached {
 				key = getCompressKey(key);
 			}
 			try {
-				return memcachedClient.delete(getFullKey(region, key));
+				String fullKey = getFullKey(region, key);
+				logger.info("==> delete object with key={}", fullKey);
+				return memcachedClient.delete(fullKey);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
