@@ -5,10 +5,22 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.datetime.DateFormatter;
+
+import com.huhuo.integration.exception.UtilException;
 
 public class TimeUtils {
 	
-	enum HPattern {
+	private static Logger logger = LoggerFactory.getLogger(TimeUtils.class);
+	
+	private static Locale locale = Locale.US;
+	
+	public enum HPattern {
 		SHORT("yyyy-MM-dd"),	// yyyy-MM-dd
 		LONG("yyyy-MM-dd HH:mm:ss"),	// yyyy-MM-dd HH:mm:ss
 		;
@@ -24,6 +36,7 @@ public class TimeUtils {
 			return value;
 		}
 	}
+	
 	/**
 	 * 获取距离baseTime偏离offset个月的日期
 	 * @param offset
@@ -128,11 +141,11 @@ public class TimeUtils {
 	 */
 	public static Date parse(String date, String pattern) {
 		try {
-			return new SimpleDateFormat(pattern).parse(date);
+			return new DateFormatter(pattern).parse(date, locale);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			logger.error(ExceptionUtils.getFullStackTrace(e));
+			throw new UtilException(e);
 		}
-		return null;
 	}
 	/**
 	 * @see #parse(String, String)
@@ -147,7 +160,7 @@ public class TimeUtils {
 	 * @return
 	 */
 	public static String parse(Date date, String pattern) {
-		return new SimpleDateFormat(pattern).format(date);
+		return new DateFormatter(pattern).print(date, locale);
 	}
 	/**
 	 * @see #parse(Date, String)
@@ -401,6 +414,7 @@ public class TimeUtils {
 		
 		System.out.println(getWeekBegin(parse("2012-06-24", "yyyy-MM-dd")).getTime());
 		System.out.println(getWeekEnd(new Date()).getTime());
+		
 		
 	}
 }
