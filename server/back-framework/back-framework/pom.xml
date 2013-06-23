@@ -20,6 +20,7 @@
 		<car.module.consumer-version>1.0.0</car.module.consumer-version>
 		<car.module.car-version>1.0.0</car.module.car-version>
 		<car.module.order-version>1.0.0</car.module.order-version>
+		<car.module.statis-version>1.0.0</car.module.statis-version>
 
 	</properties>
 
@@ -44,6 +45,11 @@
 			<groupId>com.huhuo</groupId>
 			<artifactId>car-module-order</artifactId>
 			<version>${car.module.order-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.huhuo</groupId>
+			<artifactId>car-module-statis</artifactId>
+			<version>${car.module.statis-version}</version>
 		</dependency>
 
 		<!-- test -->
