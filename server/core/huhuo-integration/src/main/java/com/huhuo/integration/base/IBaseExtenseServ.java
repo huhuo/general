@@ -43,4 +43,10 @@ public interface IBaseExtenseServ<T> extends IBaseServ<T> {
 	 * @return
 	 */
 	List<T> findModels(Page<T> page);
+	/**
+	 * find model list by ids
+	 * @param ids
+	 * @return
+	 */
+	<PK> List<T> findByIds(List<PK> ids);
 }

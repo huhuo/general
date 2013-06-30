@@ -118,6 +118,12 @@ public abstract class JdbcTplBaseExtenseServ<T extends IBaseModel<Long>> extends
 		}
 		return  getDao().findModels(getModelClazz(), page.getStart(), page.getLimit());
 	}
+	
+	@Override
+	public <PK> List<T> findByIds(List<PK> ids) {
+		return getDao().findByIds(ids);
+	}
+
 	@Override
 	public Integer delete(T t) {
 		return getDao().delete(t);
