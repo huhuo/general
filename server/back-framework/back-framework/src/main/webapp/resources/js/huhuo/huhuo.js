@@ -77,11 +77,17 @@
 				false);
 
 	};
-	$.fn.divBlickLoad = function(targetUrl, params) {
+	/**
+	 * define a div loading method for jquery
+	 */
+	$.fn.divBlockLoad = function(targetUrl, params, callback) {
 		var loadDiv = $(this);
-		divBlockLoad(loadDiv, targetUrl, params);
+		divBlockLoad(loadDiv, targetUrl, params, callback);
 	};
-	function divBlockLoad(loadDiv, targetUrl, params) {
+	/**
+	 * an function used by inner module
+	 */
+	function divBlockLoad(loadDiv, targetUrl, params, callback) {
 		loadDiv.block({
 			message : "<img src='res/images/busy.gif' style='margin:20%' />",
 			css : {
@@ -92,15 +98,30 @@
 				width : '100%',
 				opacity : .5,
 			}
-
 		});
-
-		loadDiv.load(targetUrl, params, function() {
-			$('this').unblock();
-		});
-
+		var fun = function(data, status, event) {
+			loadDiv.unblock();
+			// exception message handling
+			if($.isJsonObj(data)) {
+				var msg = JSON.parse(data);
+				loadDiv.empty();
+				if(msg.status == 'ERROR') {
+					console.log(msg);
+					$.huhuoGrowlUI('服务器内部错误');
+					status = 'error';
+				} else {
+					loadDiv.append(msg.msg);
+					$.huhuoGrowlUI(msg.msg);
+					status = 'failure';
+				}
+			}
+			// call back function invoking
+			if(callback && typeof(callback)=='function') {
+				callback(data, status, event, loadDiv);
+			}
+		};
+		loadDiv.load(targetUrl, params, fun);
 	}
-	;
 
 	// 为page中每个元素简历a标签，生成对应url，并且创建点击刷新时间
 	function pageAddA(ul, li, innerhtml, b, s, targetUrl, data, loadDiv,
