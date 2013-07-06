@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd ">
+	<!-- <import resource="actions.xml"/> -->
+	<bean id="defaultJavaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="#{componentwebCoreProps['javamail.sender.host']}" />
+		<property name="port" value="#{componentwebCoreProps['javamail.sender.port']}" />
+		<property name="username" value="#{componentwebCoreProps['javamail.sender.username']}" />
+		<property name="password" value="#{componentwebCoreProps['javamail.sender.password']}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">#{componentwebCoreProps['javamail.prop.smtp.auth']}</prop>
+				<prop key="mail.smtp.starttls.enable">#{componentwebCoreProps['javamail.prop.starttls.enable']}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="huhuoAdminServJavaMail" class="com.huhuo.componentweb.email.ServJavaMail">
+		<property name="javaMailSender" ref="defaultJavaMailSender" />
+		<property name="senderUsername" value="#{componentwebCoreProps['javamail.sender.username']}" />
+		<property name="senderNickname" value="#{componentwebCoreProps['javamail.sender.nickname']}" />
+	</bean>
+
+</beans>

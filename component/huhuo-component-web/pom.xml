@@ -22,6 +22,12 @@
 		    <artifactId>huhuo-integration</artifactId>
 		    <version>${huhuo.integration-version}</version>
 		</dependency>
+		<!-- email -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
