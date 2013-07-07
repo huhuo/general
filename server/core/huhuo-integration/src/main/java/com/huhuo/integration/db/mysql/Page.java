@@ -10,11 +10,11 @@ public class Page<T> {
 	/**
 	 * 起始记录
 	 */
-	private Integer start = 0;
+	private Long start = 0L;
 	/**
 	 * 分页数量pageSize
 	 */
-	private Integer limit = 10;
+	private Long limit = 10L;
 	/**
 	 * 分页众数
 	 */
@@ -23,7 +23,7 @@ public class Page<T> {
 	/**
 	 * 分頁號碼
 	 */
-	private Integer pageNo = 1;
+	private Long pageNo = 1L;
 
 	/**
 	 * 分页数据
@@ -35,17 +35,17 @@ public class Page<T> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Page(Integer start, Integer limit) {
+	public Page(Long start, Long limit) {
 		super();
 		this.start = start;
 		this.limit = limit;
 	}
 
-	public Integer getStart() {
+	public Long getStart() {
 		return start;
 	}
 
-	public void setStart(Integer start) {
+	public void setStart(Long start) {
 		if(start!=null){
 			this.start = start;
 			// 满足分页取数据
@@ -55,21 +55,21 @@ public class Page<T> {
 		}
 	}
 
-	public Integer getLimit() {
+	public Long getLimit() {
 		return limit;
 	}
 
-	public void setLimit(Integer limit) {
+	public void setLimit(Long limit) {
 		if(limit!=null){
 			this.limit = limit;
 		}
 	}
 
-	public Integer getPageNo() {
+	public Long getPageNo() {
 		return pageNo;
 	}
 
-	public void setPageNo(Integer pageNo) {
+	public void setPageNo(Long pageNo) {
 		if (pageNo != null) {
 
 			this.pageNo = pageNo;

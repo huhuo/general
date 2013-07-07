@@ -57,11 +57,11 @@ public interface IBaseExtenseDao<T> extends IBaseDao<T>{
 	 * @return
 	 * @throws DaoException
 	 */
-	List<T> findModels(Class<T> mappedClass, Integer start, Integer limit);
+	List<T> findModels(Class<T> mappedClass, Long start, Long limit);
 	/**
-	 * @see #findModels(Integer, Integer)
+	 * @see #findModels(Long, Long)
 	 */
-	List<T> findModels(Integer start, Integer limit);
+	List<T> findModels(Long start, Long limit);
 	/**
 	 * find by condition
 	 * @param condition
