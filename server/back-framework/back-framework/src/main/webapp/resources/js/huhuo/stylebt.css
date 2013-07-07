@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+.huhuo-top {background:url(../img/top_bj.jpg) repeat-x;height:157px}
+.huhuo-header {position:relative}
+.huhuo-logo {background:url(../img/logo.png) no-repeat;width:134px;height:47px;position:absolute;top:20px;left:20px;z-index:5}
+
+.huhuo-user {position:absolute;top:20px;right:20px;z-index:5;color:#fff;font-size:14px;line-height:2}
+.huhuo-user p span {margin-right:15px}
+.huhuo-user p span.huhuo-name {font-weight:bold}
+.huhuo-user p a {color:#7db6cf;margin-left:15px}
+
+.huhuo-nav {padding-top:100px}
+.huhuo-sec {padding:0 20px}
+.huhuo-inter {margin-left:30px}
+.huhuo-footer {text-align:center}
+.huhuo-ttl {padding:0;margin:0}
+.huhuo-signin {width:400px;margin:0 auto}
+.huhuo-form {padding:20px}
+
+.cc_pagination strong,
+.cc_pagination a {padding:0 5px;float:none}
+.cc_pagination a:hover {background:#eee;color:#004B91}
+.table tr td { word-break:break-all; word-wrap:break-word}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden; 
+}
+.clearfix { 
+	display: inline-block; 
+}
+.fl {float:left}
+.fr {float:right}
+.ullists {}
+.ullists li {list-style-type:decimal;height:25px}
+.ullists li a {color:#333;font-size:12px;line-height:25px}
+.ullists li.lieven {background:#f0f0f0}
+.oa-files {padding-left:20px}
+.oa-files a {color:#333;font-size:12px;text-decoration:underline;line-height:3;margin-right:15px}
