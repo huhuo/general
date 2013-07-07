@@ -2,6 +2,7 @@ package com.huhuo.integration.db.spring;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -64,7 +65,10 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	 * get class for generic T
 	 * @return
 	 */
-	public abstract Class<T> getModelClazz();
+	@SuppressWarnings("unchecked")
+	public Class<T> getModelClazz(){
+		return (Class<T>) ((ParameterizedType)(getClass().getGenericSuperclass())).getActualTypeArguments()[0];
+	}
 	/**
 	 * Return the JDBC DataSource used by this DAO.
 	 * subclass should specify a JdbcTemplate instance for all DB persist operation
@@ -432,7 +436,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public List<T> findModels(Class<T> clazz,
-			Integer start, Integer limit) throws DaoException {
+			Long start, Long limit) throws DaoException {
 		String sql;
 		if(start!=null && limit!=null) {
 			sql = String.format("SELECT * FROM %s ORDER BY id DESC LIMIT %s, %s", getTableName(), start, limit);
@@ -443,7 +447,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	}
 	
 	@Override
-	public List<T> findModels(Integer start, Integer limit) throws DaoException {
+	public List<T> findModels(Long start, Long limit) throws DaoException {
 		return findModels(getModelClazz(), start, limit);
 	}
 	
