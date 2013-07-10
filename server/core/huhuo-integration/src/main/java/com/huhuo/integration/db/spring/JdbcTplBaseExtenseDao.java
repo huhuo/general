@@ -359,7 +359,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 			logger.debug("<== result set <-- {}", prettyFormat(rs));
 		} catch(DaoException de){
 			throw de;
-		}catch (Throwable e) {
+		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
 		return rs;
