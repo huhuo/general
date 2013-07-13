@@ -87,3 +87,10 @@ body, input, button, select, textarea {
 	left:48%;
 	color: white;
 }
+/**
+table tr and td css setting
+*/
+.table th, .table td {
+	text-align: center;
+	vertical-align: middle;
+}
