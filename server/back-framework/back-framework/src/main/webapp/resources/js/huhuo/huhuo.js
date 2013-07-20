@@ -107,12 +107,16 @@
 				loadDiv.empty();
 				if(msg.status == 'ERROR') {
 					console.log(msg);
-					$.huhuoGrowlUI('服务器内部错误');
+					loadDiv.append('服务器内部错误');
+					$.huhuoGrowlUI('服务器内部错误^_^');
 					status = 'error';
 				} else {
 					loadDiv.append(msg.msg);
 					$.huhuoGrowlUI(msg.msg);
 					status = 'failure';
+				}
+				if(callback && typeof(callback)=='function') {
+					loadDiv.empty();
 				}
 			}
 			// call back function invoking
@@ -178,22 +182,6 @@
 		}
 		return url;
 	}
-
-	$(document).ready(function() {
-
-		// menu click event
-
-		// item click event
-		$('a.huhuoItem').click(function() {
-
-			// 屏蔽要加载页面的div
-			divBlockLoad($('div.loaddiv'), $(this).attr("href"));
-
-			return false;
-		});
-
-	});
-
 	// form
 	$.fn.huhuoFormRefushDiv = function(loadDiv, callback) {
 		var form = $(this);
