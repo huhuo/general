@@ -28,14 +28,14 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.huhuo.integration.base.IBaseExtenseDao;
 import com.huhuo.integration.base.IBaseModel;
 import com.huhuo.integration.config.GlobalConstant.DateFormat;
-import com.huhuo.integration.db.mysql.BeanHelper;
-import com.huhuo.integration.db.mysql.BeanHelper.GetterSetter;
 import com.huhuo.integration.db.mysql.Condition;
 import com.huhuo.integration.db.mysql.Group;
 import com.huhuo.integration.db.mysql.Order;
 import com.huhuo.integration.db.mysql.Page;
 import com.huhuo.integration.db.mysql.Where;
 import com.huhuo.integration.exception.DaoException;
+import com.huhuo.integration.util.BeanUtils;
+import com.huhuo.integration.util.BeanUtils.GetterSetter;
 import com.huhuo.integration.util.StringUtils;
 
 /**
@@ -119,9 +119,9 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	 * @return
 	 */
 	protected String constructField(Class<T> clazz) {
-		BeanHelper.GetterSetter[] getterSetterArray = BeanHelper.getGetterSetter(getModelClazz());
+		BeanUtils.GetterSetter[] getterSetterArray = JdbcTplUtils.getGetterSetter(getModelClazz());
 		List<String> cols = new ArrayList<String>();
-		for(final BeanHelper.GetterSetter gs : getterSetterArray){
+		for(final BeanUtils.GetterSetter gs : getterSetterArray){
 			cols.add(gs.propertyName);
 		}
 		return StringUtils.join(cols, separator);
@@ -135,11 +135,11 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		}
 		SimpleJdbcInsert insert = new SimpleJdbcInsert(getJdbcTemplate());
 		insert.withTableName(getTableName()).usingGeneratedKeyColumns("id");
-		BeanHelper.GetterSetter[] getterSetterArray = BeanHelper.getGetterSetter(getModelClazz());
+		BeanUtils.GetterSetter[] getterSetterArray = JdbcTplUtils.getGetterSetter(getModelClazz());
 		Map<String, Object> args = new HashMap<String, Object>();
 		List<String> cols = new ArrayList<String>();
 		List<Object> values = new ArrayList<Object>();
-		for(final BeanHelper.GetterSetter gs : getterSetterArray){
+		for(final BeanUtils.GetterSetter gs : getterSetterArray){
 			// use auto increase strategy for primary key
 			if("id".equals(gs.propertyName)) {
 				continue;
@@ -171,12 +171,12 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 	 * @return
 	 */
 	protected Integer insert(T t) {
-		BeanHelper.GetterSetter[] getterSetterArray = BeanHelper.getGetterSetter(t.getClass());
+		BeanUtils.GetterSetter[] getterSetterArray = JdbcTplUtils.getGetterSetter(t.getClass());
 		final StringBuffer sb = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
 		sb.append("INSERT INTO ").append(getTableName()).append("(");
 		boolean first = true;
-		for(final BeanHelper.GetterSetter gs : getterSetterArray){
+		for(final BeanUtils.GetterSetter gs : getterSetterArray){
 			// use auto increase strategy for primary key
 			if("id".equals(gs.propertyName))
 				continue;
@@ -230,12 +230,12 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		if (t == null) {
 			return null;
 		}
-		BeanHelper.GetterSetter[] getterSetterArray = BeanHelper.getGetterSetter(t.getClass());
+		BeanUtils.GetterSetter[] getterSetterArray = JdbcTplUtils.getGetterSetter(t.getClass());
 		final StringBuffer sb = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
 		sb.append("UPDATE ").append(getTableName()).append(" SET ");
 		boolean first = true;
-		for(final BeanHelper.GetterSetter gs : getterSetterArray){
+		for(final BeanUtils.GetterSetter gs : getterSetterArray){
 			if("id".equals(gs.propertyName)) {
 				continue;
 			}
@@ -482,7 +482,7 @@ protected final Logger logger = LoggerFactory.getLogger(getClass());
 		T t = condition.getT();
 		if (t != null) {
 			boolean first = true;
-			GetterSetter[] getterSetterArray = BeanHelper.getGetterSetter(t.getClass());
+			GetterSetter[] getterSetterArray = JdbcTplUtils.getGetterSetter(t.getClass());
 			for(final GetterSetter gs : getterSetterArray){
 				Object fieldValue = gs.getter.invoke(t);
 				if(fieldValue instanceof String

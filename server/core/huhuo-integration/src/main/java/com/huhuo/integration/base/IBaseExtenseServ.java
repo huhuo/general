@@ -19,6 +19,11 @@ public interface IBaseExtenseServ<T> extends IBaseServ<T> {
 	 */
 	Integer addBatch(List<T> list);
 	/**
+	 * inject bean related properties
+	 * @param t
+	 */
+	void inject(T t);
+	/**
 	 * query by criteria, which have relationship with and
 	 * @param condition
 	 * @return an array list of record, or empty object if there is no record match

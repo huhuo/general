@@ -98,12 +98,16 @@ public abstract class JdbcTplBaseExtenseServ<T extends IBaseModel<Long>> extends
 
 	@Override
 	public List<T> findByCondition(Condition<T> condition) {
-		return getDao().findByCondition(condition);
+		return findByCondition(condition, false);
 	}
 
 	@Override
 	public List<T> findByCondition(Condition<T> condition, boolean injected) {
-		return getDao().findByCondition(condition);
+		List<T> list = getDao().findByCondition(condition);
+		if(injected) {
+			inject(list);
+		}
+		return list;
 	}
 
 	@Override
